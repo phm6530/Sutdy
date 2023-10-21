@@ -20,5 +20,5 @@ const ageTest = {
 ageTest.getAgeList();
 
 const teser = 5;
-teser =+ 1;
+teser =+ 3;
 console.log(teser);
