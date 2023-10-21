@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="result"></div>
+    <script>
+        const target = document.getElementById('result');
+        fetch('https://www.7timer.info/bin/api.pl?lon=113.17&lat=23.09&product=astro&output=json')
+        .then(response => {
+            if (response.status !== 200) {
+                throw new Error(`ERROR Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            // 게시판 html 생성 
+            console.log(data.dataseries);
+            const boardData = createBoard(data.dataseries);
+            target.innerHTML = boardData;
+        })
+        .catch(error => {
+            console.error('ERROR: ' + error.message);
+            alert('오류가 발생했습니다.');
+        });
+    
+        function createBoard(data) {
+            let html = '<div class="notice">';
+            html += '<div class="notice_name">날씨 API</div>';
+    
+            data.forEach(item => {
+                html += `
+                <div class="board-item">
+                    <div class="board-title">${item.timepoint}</div>
+                    <div class="board-content">${item.cloudcover}</div>
+                </div>
+                `;
+            });
+            html += '</div>';
+            return html;
+        }
+    </script>
+    
+
+</body>
+</html>
