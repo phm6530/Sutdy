@@ -16,7 +16,7 @@ function test(a){
 }
 
 runIndelay(3)
-    .then(test)
+    // .then(test)
     .then((e)=> console.log(e + '타이머 완료'))
     .catch(console.error)
     .finally(()=> console.log('end'));

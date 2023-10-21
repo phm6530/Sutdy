@@ -10,7 +10,7 @@ const ageTest = {
     ageList : [1,2,3],
     getAgeList : function(){
         const result = this.ageList.map(function(age){
-            // unit = 33;
+            let unit = 33;
             return age + this.unit;
         });
         console.log(result);
@@ -18,3 +18,7 @@ const ageTest = {
 }
 
 ageTest.getAgeList();
+
+const teser = 5;
+teser =+ 1;
+console.log(teser);
