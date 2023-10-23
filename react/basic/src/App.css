@@ -1,61 +1,88 @@
-button{
-  cursor: pointer;
+.orange {
+  color: orange;
 }
 
-.test{
-  color: red;
-}
-body{
-  background-color: #000;
-}
-
-h1,h2,h3,h4,p,li{
-  color: #fff;
-}
-
-.Profile{
+.profile {
+  width: 300px;
   text-align: center;
-  box-shadow: 45px 15px 45px rgba(255,255,255,.2);
-  padding: 20px 10px;
-  max-width: 250px;
-  border-radius: 1rem;
+  padding: 1rem;
+  background-color: #ebebeb;
+  border-radius: 20px;
+  box-shadow: 7px 5px 23px -9px rgba(0, 0, 0, 0.75);
   margin-bottom: 1rem;
+  -webkit-box-shadow: 7px 5px 23px -9px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 7px 5px 23px -9px rgba(0, 0, 0, 0.75);
 }
 
-.Profile img{
-  width: 50%;
+.photo {
+  width: 200px;
+  height: 200px;
+  border-radius: 100%;
 }
 
-.isNew{
-  background-color: red;
-  display: inline-block;
-  padding: 5px;
+.avatar {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  margin: auto;
 }
 
+.new {
+  position: absolute;
+  left: 70%;
+  top: 10%;
+  background-color: aquamarine;
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.5rem;
+  text-transform: uppercase;
+  font-weight: bold;
+}
 
-/* counter */
-.counter{
-  border: 2px solid gold;
-  text-align: center;
-  padding: 20px;
+.container {
   width: 500px;
-  margin: 0 auto;
+  margin: auto;
 }
 
-.counter span{
-  font-size: 3em;
-  color: #fff;
-}
-
-.totalCounter{
-  color: #fff;
-}
-
-.container{
+.banner {
   text-align: center;
+  margin-top: 5rem;
+  font-size: 2rem;
+  background-color: gold;
+  font-weight: bold;
 }
 
-.Total_span{
-  font-size: 1em !important;
-  opacity: .5;
+.counter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 2rem;
+  padding: 1rem;
+  border-radius: 1rem;
+  border: 2px solid rgb(215, 127, 12);
+}
+
+.counter:hover {
+  background-color: rgb(246, 243, 197);
+}
+
+.number {
+  font-size: 7rem;
+}
+
+.button {
+  font-size: 2rem;
+  padding: 0.2rem 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  background: rgb(215, 127, 12);
+  background: linear-gradient(
+    90deg,
+    rgba(215, 127, 12, 1) 0%,
+    rgba(253, 220, 29, 1) 100%
+  );
+}
+
+.total {
+  font-size: 1rem;
+  margin-left: -1.5rem;
 }
