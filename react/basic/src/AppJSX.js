@@ -7,7 +7,7 @@ function App() {
     <>
       <h1 className='test'>hi</h1>
       <h2>hi1</h2>
-      {name}태그
+      {name}태그3
        <ul>
           {
             list.map((item) => {return <li>{item}</li>})
