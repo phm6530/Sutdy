@@ -3,7 +3,7 @@
 // console.log(isFinite(2));
 // console.log(isFinite(Infinity));
 
-// console.log(parseInt(1.42));
+console.log(parseInt(1.42));
 // console.log(parseFloat('1.42'));
 // console.log(parseInt('1.42'));
 

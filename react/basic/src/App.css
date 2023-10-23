@@ -1,0 +1,61 @@
+button{
+  cursor: pointer;
+}
+
+.test{
+  color: red;
+}
+body{
+  background-color: #000;
+}
+
+h1,h2,h3,h4,p,li{
+  color: #fff;
+}
+
+.Profile{
+  text-align: center;
+  box-shadow: 45px 15px 45px rgba(255,255,255,.2);
+  padding: 20px 10px;
+  max-width: 250px;
+  border-radius: 1rem;
+  margin-bottom: 1rem;
+}
+
+.Profile img{
+  width: 50%;
+}
+
+.isNew{
+  background-color: red;
+  display: inline-block;
+  padding: 5px;
+}
+
+
+/* counter */
+.counter{
+  border: 2px solid gold;
+  text-align: center;
+  padding: 20px;
+  width: 500px;
+  margin: 0 auto;
+}
+
+.counter span{
+  font-size: 3em;
+  color: #fff;
+}
+
+.totalCounter{
+  color: #fff;
+}
+
+.container{
+  text-align: center;
+}
+
+.Total_span{
+  font-size: 1em !important;
+  opacity: .5;
+}
