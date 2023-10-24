@@ -1,0 +1,27 @@
+
+:root{
+    --top :0;
+    --left :0;
+}
+.container{
+    width: 100%;
+    height: 100vh;
+}
+
+.pointer{
+    width: 30px;
+    height: 30px;
+    background: red;
+    border-radius: 100%;
+    border: 5px solid rgba(255,255,255,0.2);
+    position: absolute;
+    /* transition: all .1s .1s; */
+}
+p{
+    position: absolute;
+}
+
+.firstP{
+    top: var(--top) !important;
+    left: var(--left) !important;
+}
