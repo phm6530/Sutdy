@@ -1,0 +1,70 @@
+body {
+    display: flex;
+    height: 100vh;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: center;
+    background-color: #00003a;
+    color: white;
+  }
+  
+  .main {
+    height: 100%;
+    flex: 1 1 0%;
+  }
+  
+  .footer {
+    display: flex;
+    justify-content: center;
+    background-color: #00003a;
+    color: white;
+  }
+  body{
+    transition: all 0.5s ease;
+  }
+  .dark{
+    background-color: #000;
+    color: #fff;
+  }
+  .light{
+    background-color: #fff;
+    color: #000;
+  }
+
+  
+
+  .moveButton{
+    background-color: rgb(34 34 34);
+    border: 2px solid rgba(0,0,0,0.2);
+    display: inline-block;
+    width: 60px;
+    height: 20px;
+    position: relative;
+    border-radius: 1em;
+    padding: 3px;
+    cursor: pointer;
+    transition: box-shadow .5s ease;
+    }
+  
+
+  .moveButton:hover{
+    box-shadow: 5px 5px 23px rgba(255,255,255,0.5);
+  }
+  .moveButton span{
+    width: 20px;
+    transition: all .5s ease-in-out;
+    position: absolute;
+    height: 20px;
+    left: 2px;
+    display: block;
+    background-color: #000;
+    border-radius: 2em;
+  }
+  .moveButton.true span{
+    left: calc(100% - 22px);
+    
+  }

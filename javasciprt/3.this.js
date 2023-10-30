@@ -15,9 +15,10 @@ const ageTest = {
     unit : '살',
     ageList : [1,2,3],
     getAgeList : function(){
+        const self = this;
         const result = this.ageList.map(function(age){
-            return age + this.unit;
-        }.bind(this));
+            return age + self.unit;
+        });
         console.log(result);
     }
 }
@@ -43,11 +44,13 @@ function test(e){
     return this.name + ', ' + this.age;
 };
 
-test.call(obj,2); // call
+let result = test.call(obj,2); // call
+const tester = result.split(',');
+console.log(tester[0]);
 
- const result = test.bind(obj);
- result(); // bind 
-
+//  const result = test.bind(obj);
+ 
+// obj.test(2);
 
 
 
@@ -57,6 +60,6 @@ test.call(obj,2); // call
 // function doubleValue(value, index, arr) {
 //     return value * 2 + this.offset;
 // }
-
+ 
 // const doubledValues = numbers.map(doubleValue, context);
 // console.log(doubledValues); // 출력: [12, 14, 16, 18, 20]

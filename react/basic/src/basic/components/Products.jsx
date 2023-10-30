@@ -1,23 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import useProducts from '../../hooks/use-products';
 
 export default function Products() {
-  const [products, setProducts] = useState([]);
-  const [checked , setchecked] = useState(false);
-  const handleChange = () => {setchecked((check) => !check)};
-  useEffect(()=>{
-    fetch(`data/${checked ===true ? 'sale_' : ''}products.json`)
-    .then(response => response.json())
-    .then(data => {
-      console.log('호출 성공');
-      setProducts(data);
-    });
-    return () => { console.log('😎 청소함');}
-  },[checked])
+  const [checked, setChecked] = useState(false);
+  const [loading,  products , error ] = useProducts({salesOnly : checked});
+  const handleChange = () => {setChecked((check) => !check);};
 
+  if(loading){ return <p>loading...</p>; }
+  if(error){ return <p>Error!!</p>; }
   return (
     <>
-    <input id="checkbox" type="checkbox" value={checked} onChange={handleChange}/>
-    <label htmlFor="checkbox">Show only Hot Sale 😉</label>
+      <input
+        id='checkbox'
+        type='checkbox'
+        value={checked}
+        onChange={handleChange}
+      />
+      <label htmlFor='checkbox'>Show Only 🔥 Sale</label>
       <ul>
         {products.map((product) => (
           <li key={product.id}>
@@ -28,7 +27,6 @@ export default function Products() {
           </li>
         ))}
       </ul>
-      {/* <button onClick={() => setCount((prev) => prev + 1)}>{count}</button>/ */}
     </>
   );
 }

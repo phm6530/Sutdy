@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-export default function Counter({ total, onClick }) {
+export default function Counter({ total, Click }) {
   const [count, setCount] = useState(0);
   return (
     <div className='counter'>
@@ -11,7 +11,7 @@ export default function Counter({ total, onClick }) {
         className='button'
         onClick={() => {
           setCount((prev) => prev + 1);
-          onClick();
+          Click();
         }}
       >
         Add +
