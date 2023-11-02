@@ -7,15 +7,18 @@ export default function Container() {
   const [workData, setWorkData] = useState(data.map((e) => ({...e , checked : false })) );
   const [value, setValue] = useState("");
   const idx = useRef(data.length);
+  const [active , setActive] = useState(0);
+  const [ani , aniSet] = useState(false);
 
-  const AddWork = (val) => {
-    setWorkData((e) => {
-      const resultArr = { id: idx.current, title: val , checked : false };
-      idx.current++;
-      return [...e, resultArr];
-    });
-    setValue(""); // Value 값 초기화
-  };
+  const MSG = {
+    0 : '입력이 필요합니다',
+    1 : '공백은 입력이 불가합니다.',
+    2 : ' 삭제하시겠습니까?'
+  }
+
+  useEffect(()=>{
+    aniSet(true);
+  },[active]);
 
   const chk = (id) => {
     setWorkData((arr) => {
@@ -23,47 +26,84 @@ export default function Container() {
     });
   }
 
-  const deleteWork = (id , title) => {
-    console.log(title);
-      const confirm = window.confirm(`${title} 삭제하시겠습니까?`);
-      if(!confirm){
-          return;
-      } 
-    setWorkData((arr) => {
-      const returnArr = arr.filter(item => item.id !== id);
-      console.log('returnArr : ',returnArr);
-      return returnArr;
-    });
+  const Component = () =>{
+      const filtering = {
+        0 : () => true,
+        1 : item => item.checked === false,
+        2 : item => item.checked === true,
+      }
+      const showData = workData.filter(filtering[active]);
+      return(
+        <>
+        {showData.length === 0 ? 
+        <div className={styled.slide}>data</div> : <ul className={ani ?`${styled.slide} $` : "" }>
+          {showData.map(item => {
+            return (
+              <>
+                <li className={`${styled.tab}`} key={item.id}>
+                  <label onClick={() => {chk(item.id); aniSet(false) }} className={`chk ${item.checked ? styled.end : ''}`}>
+                    <span className={styled.index}>{item.id + 1}.</span>
+                    <span className={styled.title}>{item.title}</span>
+                    <span className={`${styled.state} ${item.checked === true ? styled.after : styled.before }`}>
+                      {item.checked ? 'Completed' : 'NotYet'}
+                    </span>
+                  </label>
+                  <button onClick={() => deleteWork(item.id ,  item.title)}>
+                    <FontAwesomeIcon icon={faXmark} className={styled.iconHover}/>
+                  </button>
+                </li>
+            
+              </>
+            );
+          })}
+        </ul>
+        }
+        </>
+      )
+  }
+
+  const AddWork = (val) => {
+    setWorkData((e) => [...e, { 
+      id: idx.current++, 
+      title: val, 
+      checked : false 
+    }]);
+  };
+
+  const deleteWork = (id, title) => {
+    if (!window.confirm(title + MSG[2])) {
+      return;
+    }
+    setWorkData(arr => arr.filter(item => item.id !== id));
   };
 
   const handler = (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
     if(!value){
-      alert('입력해주셈');
+      alert(MSG[0]);
       return;
     }
     if(value.trim() === ''){
-      alert('공백만 입력 금지 안됨');
+      alert(MSG[1]);
       return;
     }
     AddWork(value);
+    setValue(""); // Value 값 초기화
   };
 
-  useEffect(()=>{
-    console.log(workData);
-  },[workData])
-  
-  const List = () =>{
-    
-    return(
+  const List = () => {
+    return (
       <>
-        <div className={styled.list + ' ' +styled.active}>ALL</div>
-        <div className={styled.list}>Active</div>
-        <div className={styled.list}>Completed</div>
+        {listArr.map((data , idx) => (
+          <div key={data} className={`${styled.list} ${idx === active && styled.active}`}
+            onClick={()=> setActive(idx)}> {data} </div>
+        ))}
+        
       </>
-    )
-  };
+    );
+  }
 
+  
   return (
     <>
     <div className={styled.container}>
@@ -71,29 +111,12 @@ export default function Container() {
         <span className={styled.darkMode}>dark mode</span>
         <List/>
       </div>
-      <div className={styled.uiArea}>
-        <ul>
-          {workData.map(item => {
-            return (
-              <li className={`${styled.tab}`} key={item.id}>
-                {item.checked === true ? <div className='before'>hi</div> : <div className='before'>fuck</div>}
-                <label onClick={() => chk(item.id)} className={`chk ${item.checked ? styled.end : ''}`}>
-                  <span className={styled.index}>{item.id}.</span>
-                  <span className={styled.title}>{item.title}</span>
-                </label>
-                <button onClick={() => deleteWork(item.id ,  item.title)}>
-                  <FontAwesomeIcon icon={faXmark} className={styled.iconHover}/>
-                  
-                </button>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
+      <div className={styled.uiArea}><Component/></div>
+     
       <form className={styled.submit} onSubmit={handler}>
-        <input className={styled.ipt_title} type="text" value={value} onChange={(e) => setValue(e.target.value)} />
-        <button className={styled.button}>Add</button>
-        </form>
+      <input className={styled.ipt_title} type="text" value={value} onChange={(e) => setValue(e.target.value)} />
+      <button className={styled.button} type='submit'>Add</button>
+</form>
 
     </div>
       
@@ -102,7 +125,7 @@ export default function Container() {
     </>
   );
 }
-// const listArr = ['All','Active','Compl'];
+const listArr = ['All','Active','Complete'];
 
 const data = [
   {
