@@ -1,3 +1,48 @@
+@font-face {
+  font-family: 'Pretendard-Regular';
+  src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+
+:root {
+  --background-color: rgb(0 0 0 / 9%);
+  --text-color: black;
+  --text-color2: #252525;
+  --background-image: linear-gradient(to right, rgb(6 6 6 / 18%) 24%, rgb(0 0 0 / 0%) 0%);
+  --bg-custum: linear-gradient(to right, rgb(240 240 240 / 0%), rgba(255, 255, 255, 0.966) , rgb(227 227 227 / 75%));
+  --border: 1px solid rgb(111 111 111 / 11%);
+  --box-border: 0px solid rgb(255 255 255);
+  --box-shadow: -6px -6px 14px rgba(255, 255, 255, 0.7), 6px 6px 10px rgba(0, 0, 0, 0.15);
+  --input: transparent;
+  --input-border: 2px solid #5c5c5c1f;
+  --btn-shadow : -4px -6px 10px rgba(255, 255, 255, 0.7), 0px 0px 10px rgba(0, 0, 0, 0.15);
+  --btn-inshadow :  inset -6px -6px 14px rgba(255, 255, 255, 0.7), inset 6px 6px 7px rgba(0, 0, 0, 0.15);
+  --btn-color2 : #ffffff;
+}
+
+.dark{
+  --background-color: #181c21;
+  --text-color: #fff;
+  --text-color2: #ffffff;
+  --background-image: linear-gradient(to right, rgba(255, 255, 255, 0.178) 24%, rgba(255,255,255,0) 0%);
+  --bg-custum: linear-gradient(to right, rgb(255 255 255 / 0%), rgb(255 255 255 / 5%) , rgb(255 255 255 / 0%));
+  --border: 1px solid rgba(255, 255, 255, 0.05);
+  --box-border: 0px solid rgb(39 44 50);
+  --box-shadow: -6px -6px 14px rgb(0 0 0 / 34%), 6px 6px 10px rgb(0 0 0 / 14%);
+  --input: transparent;
+  --btn-color: #000;
+  --input-border: 2px solid #c9c9c91f;
+  --btn-shadow: -4px -4px 10px rgba(27, 26, 26, 0.219), 0px 0px 5px rgba(36, 36, 36, 0.774);
+  --btn-inshadow: inset -6px -6px 14px rgba(2, 2, 2, 0.089), inset 6px 6px 7px rgba(0, 0, 0, 0.712);
+  --btn-color2: #c98647;
+}
+
+body{
+  font-family: 'Pretendard-Regular';
+  background-color: var(--background-color);
+}
+
 label{
   cursor: pointer;
   width: 100%;
@@ -40,11 +85,11 @@ label{
 .container{
   padding: 20px;
   border-radius: 1em;
-  box-shadow: 63px 105px 87px rgb(255 255 255 / 4%);
+  box-shadow: var(--box-shadow);
   width: 90%;
-  border: 8px solid rgb(39 44 50);
+  border: var(--box-border);
   max-width: 500px;
-  background: linear-gradient(to right, rgb(255 255 255 / 0%), rgb(255 255 255 / 5%) , rgb(255 255 255 / 0%));
+  background: var(--bg-custum);
   animation: .5s ani cubic-bezier(0, 0.36, 0, 0.86);
 }
 @keyframes ani {
@@ -58,8 +103,9 @@ label{
   margin-left: 20px;
   display: inline-block;
   font-size: .7rem;
-  background-color: rgb(221, 81, 81);
+  background-color: rgb(218 134 134);
   padding: 2px 7px;
+  color: #fff;
   border-radius: 1em;
 }
 
@@ -72,57 +118,58 @@ label{
   justify-content: space-between;
   display: flex;
   padding: 7px 0px;
-  color: #fff;
+  color: var(--text-color);
   margin: 0 15px;
   /* border-radius: 6em; */
-  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.178) 24%, rgba(255,255,255,0) 0%);
+  background-image: var(--background-image);
   background-position: bottom;
   background-size: 7px 2px;
   background-repeat: repeat-x;
 }
 .button{
-  background-color: #494949;
-  color: #fff;
-  padding: 5px 10px;
-  border-radius: .5em;
-  transition: background-color .5s ease;
+  background-color: var(--btn-color2);
+    color: var(--text-color2);
+    padding: 5px 16px;
+    border-radius: 0.4em;
+    transition: background-color .5s ease;
+    box-shadow: var(--btn-shadow);
 }
-.button:hover{
+/* .button:hover{
   background-color: #000;
-}
+} */
 
 
 .ipt_title{
-  background-color: #00000052;
+  background-color: var(--input);
   outline: unset;
-  border-radius: 4em;
-  width: calc(100% - 60px);
-  color: #fff;
+  border-radius: 4rem;
+  width: calc(100% - 79px);
+  color: var(--text-color);
   padding: 6px 20px;
-  border: 2px solid #c9c9c91f;
+  border: var(--input-border);
   font-size: 14px;
   transition: background-color .3s ease;
-}
+  box-shadow:var(--btn-inshadow);
+} 
 .ipt_title:focus{
-  background-color: #1313135e;
-  border: 2px solid #e4e4e471;
+  /* background-color: #1313135e; */
+  /* border: 2px solid #e4e4e471; */
 }
 
 .submit{
   display: flex;
   padding: 7px;
   padding-top: 20px;
-  background: rgb(0 0 0 / 2%);
-  border-radius: 0.5em;
+  /* background: rgb(0 0 0 / 2%); */
+  /* border-radius: 0.5em; */
   justify-content: space-between;
-  border-top: 1px solid rgb(255 255 255 / 5%);
-
+  border-top: var(--border);
 }
 
 .tabHeader{
   display: flex;
   justify-content: flex-end;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: var(--border);
   padding-bottom: 19px;
 }
 
@@ -136,10 +183,10 @@ label{
 .list.active{
   color: #ce5120 !important;
 }
-
+/* 
 .list:hover{
   color: #ffffff;
-}
+} */
 .slide{
   animation: slideUp .5s ease-in-out;
 }
@@ -177,6 +224,16 @@ label{
   color: #fff;
 }
 
+.xicon{
+  font-size: 30px;
+  margin-bottom: 20px;
+}
+.NoData{
+  padding: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
 .uiArea{
   margin-bottom: 20px;
@@ -184,6 +241,7 @@ label{
   min-height: 300px;
   max-height: 300px;
   overflow-y: scroll;
+  color: var(--text-color);
 }
 
 .uiArea::-webkit-scrollbar {
@@ -206,7 +264,7 @@ label{
 
 .iconHover{
   opacity: .6;
-  color: #fff;
+  color: var(--text-color);
 }
 .iconHover:hover{
   opacity: 1;
@@ -218,4 +276,40 @@ label{
   font-weight: bold;
   /* margin-left: 13px; */
   font-size: 18px;
+}
+
+.mode{
+  width: 70px;
+  height: 30px;
+  font-size: 20px;
+  display: flex;
+  border-radius: 5rem;
+  border: 2px solid #eb9f6c14;
+  align-items: center;
+  justify-content: center;
+  color: #ffcc41;
+  position: relative;
+  transition: all .2s ease;
+  box-shadow: var(--btn-inshadow);
+}
+
+.mode:after{
+  content: "";
+  display: block;
+  height: 20px;
+  width: 20px;
+  background: linear-gradient(to right,  rgba(204, 97, 48, 0.87), rgba(236, 166, 166, 0.932));
+  position: absolute;
+  /* border: 3px solid rgba(255,255,255,0.2); */
+  left: 5px;
+  border-radius: 4rem;
+  transition: all .5s ease;
+}
+
+.mode.active::after{
+  left: calc(100% - 25px);
+  
+}
+.noAnimation {
+  animation: none !important;
 }
