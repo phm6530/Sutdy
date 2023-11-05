@@ -1,3 +1,10 @@
+
+export function handler(e, MSG , AddWork) {
+  e.preventDefault();
+  let value = document.getElementById("inputValue").value;
+  handlerWork({ value, MSG , AddWork}); //<--props
+}
+
 export function handlerWork(props) {
     if (!props.value) {
       alert(props.MSG[0]);
@@ -11,8 +18,3 @@ export function handlerWork(props) {
     document.getElementById("inputValue").value = ""; // 수정된 부분
   }
   
-  export function handler(e, MSG , addWork) {
-    e.preventDefault();
-    let value = document.getElementById("inputValue").value;
-    handlerWork({ value, MSG , addWork});
-  }

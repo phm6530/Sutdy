@@ -6,4 +6,4 @@ export const MSG = {
     2 : ' 삭제하시겠습니까?'
 }
 
-export const initData = [{ id: 0, title: '초기데이터', checked: false }];
+export const initData = [{ id: 0 , title: '초기데이터', checked: false }];

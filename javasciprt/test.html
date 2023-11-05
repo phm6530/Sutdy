@@ -4,15 +4,75 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        .active{
+            background-color: red !important;
+        }
+        .hi{
+            background-color: yellow;
+            cursor: pointer;
+        }
+        .hi:active{
+            background-color: rgb(255, 227, 227);
+        }
+    </style>
+
 </head>
 <body>
-    <button id="myButton">Click me</button>
+    <div class="hig">1</div>
+    <div class="hi" id="get">1</div>
+    <div class="hi">2</div>
+    <div class="hi">3</div>
 
-<script>
-    document.getElementById('myButton').addEventListener('click', () => {
-        // 여기에서 'this'는 전역 스코프를 가리킴
-        this.style.backgroundColor = 'red'; // 원하는 대상에 접근 가능
-    });
-</script>
+    <div class="hione">1</div>
+    <div class="hione">2</div>
+    <div class="hione">3</div>
+
+    <div class="hitwo">1</div>
+    <div class="hitwo">2</div>
+    <div class="hitwo">3</div>
+
 </body>
+<script>
+
+// 절차지향형
+const tester = (select)=>{ 
+    const elements = document.querySelectorAll(select);
+    elements.forEach((element)=>{
+        element.addEventListener('click',(e)=>{
+            elements.forEach(del => del.classList.remove('active'));
+            e.target.classList.add('active');
+        });
+    });
+}
+
+
+const soloClick = (select)=>{
+    const element = document.querySelector(select);
+    element.addEventListener('click', (e)=>{
+        e.target.classList.add('hello');
+    });
+}
+
+soloClick('.hig');
+
+// 객체 지향형
+// class ElementGroup {
+//   constructor(select) {
+//     this.elements = document.querySelectorAll(select);
+//     this.elements.forEach(element => {
+//       element.addEventListener('click', (e) => {
+//         this.elements.forEach(del => del.classList.remove('active'));
+//         e.target.classList.add('active');
+//       });
+//     });
+//   }
+// }
+
+// tester('.hi');
+// tester('.hione');
+// tester('.hitwo');
+</script>
+
+
 </html>

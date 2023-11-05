@@ -28,16 +28,17 @@ const StyledButton = styled.button`
 `;
 
 
-function Styledcomponent({children}) {
+function Styledcomponent({onclick, children}) {
   return (
     <>
       <Container className='Component'>
         <Button>ggg</Button>
         <Button primary>ggg</Button>
       </Container>
-      <StyledButton>{children}</StyledButton>
+      <StyledButton onclick={onclick}>{children}</StyledButton>
     </>
   );
 }
+
 
 export default Styledcomponent;
