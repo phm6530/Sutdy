@@ -1,5 +1,6 @@
 
-const Arr = (start , limit) =>{ 
+const Arr = (start , limit) =>{  // 동적할당배열임
+    // Array의 파라미터는 반복자 / mapFn(currentValue ,inex)로 나뉘어짐
     return Array.from({length: limit} , (_, data)=>{
         return start + data; 
     });

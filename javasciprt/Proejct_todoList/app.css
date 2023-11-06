@@ -1,0 +1,10 @@
+body{
+    background: #000;
+}
+ul,li,h1,h2,p,b,span{
+    color: #fff;
+}
+
+.active{
+    opacity: .3;
+}

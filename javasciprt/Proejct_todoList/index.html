@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo list</title>
+    <link rel="stylesheet" href="./reset.css">
+    <link rel="stylesheet" href="./app.css">
+
+</head>
+<body>
+    <div id="btnArea"></div>
+    <ul id="TodoList"></ul>
+    <!-- 검색 -->  
+    <form onsubmit="return false;">
+        <input type="text" id="SeachTodo" placeholder="검색할 네이밍 적어주세요">
+        <button id="SeachBtn" type="button" onclick=Seach();>Seach</button>
+    </form>
+    
+    <!-- 등록 -->
+    <form onsubmit="return false;">
+        <input type="text" id="inputTodo" placeholder="적어주세요">
+        <button id="btnSubmit" type="button" onclick=Submit();>TodoList</button>
+    </form>
+</body>
+<script src="./script.js"></script>
+
+</html>

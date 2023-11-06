@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo list</title>
+    <link rel="stylesheet" href="./reset.css">
+    <link rel="stylesheet" href="./app.css">
+    
+</head>
+<body>
+    <div id="myCalendar"></div>
+    <div id="test"></div>
+    
+</body>
+<script>
+    const calendarElement = document.getElementById('myCalendar');
+    const testElement = document.getElementById('test');
+
+    //오늘 달력
+    const date = new Date();
+    const ViewYear = date.getFullYear();
+    const Viewmonth = date.getMonth();
+
+
+    let html = '';
+    html += `${ViewYear}년 ${Viewmonth}월`;
+    testElement.innerHTML = html;
+
+
+</script>
+</html>
