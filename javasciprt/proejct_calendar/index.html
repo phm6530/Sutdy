@@ -9,24 +9,122 @@
     
 </head>
 <body>
-    <div id="myCalendar"></div>
     <div id="test"></div>
+    <div id="myCalendar"></div>
     
 </body>
 <script>
     const calendarElement = document.getElementById('myCalendar');
     const testElement = document.getElementById('test');
+    const todayData = document.createElement('div');
 
-    //오늘 달력
+    const days = ['일','월','화','수','목','금','토'];
+
+    //오늘 날짜
     const date = new Date();
-    const ViewYear = date.getFullYear();
-    const Viewmonth = date.getMonth();
+    let ViewYear = date.getFullYear();
+    let ViewMonth = date.getMonth() + 1;
+    let ViewDay = date.getDate();
+    console.log(ViewYear);
 
+    testElement.appendChild(todayData);
 
-    let html = '';
-    html += `${ViewYear}년 ${Viewmonth}월`;
-    testElement.innerHTML = html;
+    const btnPrev = document.createElement('button');
+    const btnNext = document.createElement('button');
+    btnPrev.textContent = 'prev';
+    btnNext.textContent = 'next';
+    testElement.appendChild(btnPrev);
+    testElement.appendChild(btnNext);
+    
+    const cusMonth = (item) => {
+        item === 'prev' ? ViewMonth -= 1 : ViewMonth += 1;
+        if(ViewMonth > 12){
+            ViewYear += 1;
+            ViewMonth = 1;
+        }else if(ViewMonth < 1){
+            ViewYear -= 1;
+            ViewMonth = 12;
+        }
+        render(ViewYear , ViewMonth);
+    }
 
+    //prev, next 버튼
+    btnPrev.addEventListener('click', () => cusMonth('prev'));
+    btnNext.addEventListener('click', () => cusMonth('next'));
+    
+    // 2월 때문에 넣은 윤년.. 계산법모름 그냥 붙여넣음
+    function isLeapYear(year) {
+        return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
+    }
 
+    const isLastDay = [
+        31, // 1월
+        isLeapYear(ViewYear) ? 29 : 28, //2월
+        31, //3월
+        30, //4월
+        31, //5월
+        30, //6월
+        31, //7월
+        31, //8월
+        30, //9월
+        31, //10월
+        30, //11월
+        31 // 12월
+    ] 
+
+    // 랜딩 페이지
+    const render = (year , month)=> {
+        todayData.textContent = `${year}년 ${month}월`;
+        todayData.classList.add('today-data');
+        const startDay = new Date(year, month - 1, 1).getDay();//시작일
+        const endDay = isLastDay[month -1 ];
+
+        // 달력 innerHtml 
+        let html = '<table>';
+        html += '<thead><th>달력</th></thead>';
+        html += '<tbody>';
+        days.forEach((item ,idx) =>{
+            if(idx === 0 ){
+                html += `<td class="sunday">${item}</td>`;    
+            }else if(idx === days.length -1){
+                html += `<td class="staurday">${item}</td>`;
+            }else{
+                html += `<td>${item}</td>`;
+            }
+
+        });
+        let day = 1;
+        const currentDay = new Date(year , month -1 , day);
+        console.log(currentDay.toDateString())
+        for(let row = 0; row < 6; row ++){
+            html += '<tr>';
+            for(let col = 0; col < 7; col ++){
+                // 저번달 날짜 계산
+                if (row === 0 && col < startDay) {
+                    html += '<td></td>';
+                } 
+                // 이번달 날짜 계산
+                else if(day <= isLastDay[month -1]){
+                     html += `<td class=${ViewDay === day ? 'today' : '' }>${day++}일</td>`;
+                }
+                else{
+                    html += `<td></td>`;
+                }
+            }
+            html += '</tr>';
+        }
+        
+        // for(let day = 1; day <= isLastDay[month - 1]; day ++){
+        //     html += `<td><span>${day} 일 </span></td>`
+        // }
+        
+        html += '</tbody>';
+        html += '</table>';
+        calendarElement.innerHTML = html;
+    }
+
+    render(ViewYear , ViewMonth); //초기 화면 랜더링
+    
+    
 </script>
 </html>
