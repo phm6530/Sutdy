@@ -25,25 +25,26 @@
     let ViewYear = date.getFullYear();
     let ViewMonth = date.getMonth() + 1;
     let ViewDay = date.getDate();
-
-    // nav 세팅
-    navDiv.appendChild(btnPrev);
-    navDiv.appendChild(todayDate);
-    navDiv.appendChild(btnNext);
     
+
+    const updateCalendarMonthYear = (year, month) => {
+        ViewYear = year;
+        ViewMonth = month;
+        render(ViewYear, ViewMonth);
+    };
+
     const cusMonth = (item) => {
         item === 'prev' ? ViewMonth -= 1 : ViewMonth += 1;
         if(ViewMonth > 12){
-            ViewYear += 1;
-            ViewMonth = 1;
+            updateCalendarMonthYear(ViewYear + 1, 1);
         }else if(ViewMonth < 1){
-            ViewYear -= 1;
-            ViewMonth = 12;
+            updateCalendarMonthYear(ViewYear - 1, 12);
+        } else {
+            render(ViewYear, ViewMonth);
+            addClickHandler('td', ClickEvent);
         }
-        render(ViewYear , ViewMonth);
-        addClickHandler('td', ClickEvent);
     }
-
+    
     //prev, next 버튼
     btnPrev.addEventListener('click', () => cusMonth('prev'));
     btnNext.addEventListener('click', () => cusMonth('next'));
@@ -96,26 +97,30 @@
         calendarDiv.innerHTML = html;
     }
 
-
-    const addClickHandler = (ClassName, callback) => {
+    const addClickHandler = (ClassName ,  callback)=>{
         const target = document.querySelectorAll(ClassName);
         callback(target);
     }
-    const ClickEvent = (div) => {
+
+    const ClickEvent = (div) =>{
         div.forEach(e => {
             e.addEventListener('click', () => {
-                if (e.classList.contains('active')) {
-                    e.classList.remove('active');
-                } else {
-                    div.forEach(del => del.classList.remove('active'));
-                    e.classList.add('active');
+                if(!e.classList.contains('NotThisMonth')){
+                    if (e.classList.contains('active')) {
+                        e.classList.remove('active');
+                    } else {
+                        div.forEach(del => del.classList.remove('active'));
+                        e.classList.add('active');
+                    }
                 }
             });
         });
     }
-
     render(ViewYear , ViewMonth); //초기 화면 랜더링
-    addClickHandler('td', ClickEvent); // 클릭 이벤트 할당
+    addClickHandler('td' , ClickEvent);
+    
+    
+
 
 
 
