@@ -1,0 +1,144 @@
+@import './font.css';
+:root{
+    --title-font :  'Noto Sans KR';
+    --title-color : rgb(41 81 133);
+}
+.calendar-month{
+    font-family: var(--title-font);
+    color: rgb(64 72 147);
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 1.4em;
+    letter-spacing: -1px;
+    /* font-style: italic; */
+}
+
+body{
+    background-color: #e2e6ef;
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    align-content: center;
+    align-items: center;
+    color: #333;
+}
+ul,li,h1,h2,p,b,span{
+    color: #fff;
+}
+button{
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    border: 0;
+    border-radius: 4em;
+    background: #e5e9f2;
+    box-shadow: -4px -4px 10px rgb(255, 255, 255 ,.5), 4px 4px 10px rgba(36, 36, 36, .15);
+}
+
+.active{
+    /* opacity: .3; */
+    background: #fff;
+}
+
+
+
+.myCalendar{
+    padding: 30px;
+    border: 1px solid rgba(255,255,255,0.1);
+    display: inline-block;
+    background-color: #e5e9f2;
+    border-radius: 1rem;
+    box-shadow: -14px -14px 30px rgba(255, 255, 255, .8), 14px 14px 50px rgb(34 48 65 / 17%);
+    width: 90%;
+    max-width: 400px;
+}
+
+.myCalendar .calendar{
+    display: grid;
+    grid-template-columns: repeat(1);
+    font-family: 'TheJamsil5Bold';
+}
+.myCalendar .calendar th{
+    height: 30px;
+    vertical-align: middle;
+    /* opacity: .3; */
+    border-spacing: 10px;
+    font-size: 12px;
+    font-weight: bold;
+}
+.myCalendar .calendar .sunday{
+    color: #c41e17e6;
+}
+
+.myCalendar .calendar td{
+    padding: 10px;
+    text-align: center;
+    vertical-align: middle;
+    box-sizing: border-box;
+    /* width: 86px; */
+    height: 30px;
+    font-family: var(--title-font);
+    height: 47px;
+    /* background-color: #2e3a54; */
+    /* box-shadow: -4px -4px 10px rgb(255, 255, 255 ,.5), 4px 4px 10px rgba(36, 36, 36, .15); */
+    border-radius: 100%;
+    font-size: 14px;
+    /* font-weight: bold; */
+}
+
+table{
+    border-collapse: separate; /* 테이블 경계를 별도로 처리합니다. */
+    border-spacing: 10px; /* 셀 간의 간격을 설정합니다. */
+}
+
+
+.calendar-nav{
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 20px;
+    /* box-shadow: -14px -14px 20px rgba(255, 255, 255, .4), 14px 4px 10px rgba(36, 36, 36, .1); */
+    border-radius: 1em;
+    margin-bottom: 30px;
+    align-items: center;
+    /* border: 5px solid #ffffff30; */
+}
+
+.today{
+    position: relative;
+    /* box-shadow: -4px -4px 5px rgba(245, 24, 24, 0.1), 4px 4px 5px rgba(245, 24, 24, 0.1) !important; */
+    /* border: 1px solid rgb(0 0 0 / 8%); */
+    box-shadow: inset 1px 1px 3px rgba(36, 36, 36, .15) , inset -4px -4px 10px rgb(255, 255, 255 ,.5);
+}
+.today:after{
+    content: "Today";
+    position: absolute;
+    left: 23px;
+    display: none;
+    top: 7px;
+    color: #4596d7;
+    /* background: #1182ad; */
+    padding: 5px;
+    text-shadow: 1px 1px 3px #c6feff;
+    border-radius: 4px;
+    font-size: 9px;
+    opacity: .5;
+}
+
+.NotThisMonth{
+    opacity: .2;
+}
+
+.calendar td:not(.NotThisMonth){
+    cursor: pointer;
+}
+
+.nav-year{
+    font-size: 15px;
+    color: var(--title-color);
+    opacity: .5;
+}
+
+.btn-prev{
+    margin-left: auto;
+    margin-right: 10px;
+}
