@@ -1,15 +1,21 @@
 @import './font.css';
 :root{
-    --title-font :  'Noto Sans KR';
+    --title-font :  'SUITE-Regular';
     --title-color : rgb(41 81 133);
 }
+
+.wrap{
+    display: flex;
+}
+
 .calendar-month{
     font-family: var(--title-font);
-    color: rgb(64 72 147);
+    color: rgb(236 240 243);
     font-weight: 400;
-    font-size: 18px;
+    font-size: 34px;
     line-height: 1.4em;
     letter-spacing: -1px;
+    text-shadow: 2px 0px 4px rgb(98 138 192);
     /* font-style: italic; */
 }
 
@@ -35,6 +41,13 @@ button{
     box-shadow: -4px -4px 10px rgb(255, 255, 255 ,.5), 4px 4px 10px rgba(36, 36, 36, .15);
 }
 
+button[type=submit]{
+    width: 200px;
+    /* color: #fff; */
+    margin-top: 19px;
+    /* background-color: #404893; */
+}
+
 .active{
     /* opacity: .3; */
     background: #fff;
@@ -50,6 +63,7 @@ button{
     border-radius: 1rem;
     box-shadow: -14px -14px 30px rgba(255, 255, 255, .8), 14px 14px 50px rgb(34 48 65 / 17%);
     width: 90%;
+    min-height: 516px;
     max-width: 400px;
 }
 
@@ -98,8 +112,8 @@ table{
     padding: 20px 20px;
     /* box-shadow: -14px -14px 20px rgba(255, 255, 255, .4), 14px 4px 10px rgba(36, 36, 36, .1); */
     border-radius: 1em;
-    margin-bottom: 30px;
-    align-items: center;
+    margin-bottom: 10px;
+    align-items: flex-start;
     /* border: 5px solid #ffffff30; */
 }
 
@@ -134,11 +148,88 @@ table{
 
 .nav-year{
     font-size: 15px;
-    color: var(--title-color);
-    opacity: .5;
+    color: #000;
+    opacity: .2;
 }
 
 .btn-prev{
     margin-left: auto;
     margin-right: 10px;
+}
+
+.btn-prev , .btn-next{
+    position: relative;
+    margin-top: 10px;
+}
+
+.btn-prev::after , .btn-next::after{
+    position: absolute;
+    font-family: 'fontawesome';
+    top:50%;
+    color: #26417d;
+    opacity: .5;
+    font-size: 15px;
+    transform: translate(-50% , -50%);
+}
+
+.btn-next::after{
+    content: "\f0da";
+}
+
+.btn-prev::after{
+    content: "\f0d9";
+}
+
+.btn-prev:hover::after ,.btn-next:hover::after{
+    opacity: 1 !important;
+}
+
+
+/* 투두리스트 */
+.listArea{
+    width: 400px;
+    margin: 0 40px;
+    /* box-shadow: -14px -14px 30px rgba(255, 255, 255, .8), 14px 14px 50px rgb(34 48 65 / 17%); */
+    min-height: 516px;
+    /* padding: 30px; */
+    border-radius: 1rem;
+}
+
+.listArea .todoList{
+    box-shadow: -4px -4px 15px rgba(255, 255, 255, .7), 4px 4px 15px rgba(36, 36, 36, .15);
+    margin-bottom: 20px;
+    border-radius: 1rem;
+    min-height: 60px;
+    font-size: 14px;
+    padding: 20px 30px;
+    animation: fadeUp .3s ease;
+}
+
+input[type=text]{
+    width: calc(100% - 20px);
+    border: 0;
+    border-radius: 3em;
+    padding: 10px;
+    border: 0;
+    background: transparent;
+    /* border: 2px solid rgba(255,255,255,0.5); */
+    box-shadow: inset 1px 1px 3px rgba(36, 36, 36, .15), inset -4px -4px 10px rgb(255, 255, 255 ,.5);
+}
+input[type=text]:focus{
+    outline: none;
+}
+
+
+@keyframes fadeUp {
+    0%{
+        transform: translateY(+50px);
+    }
+    100%{
+        transform: translateY(0px);
+    }
+}
+
+.complete{
+    opacity: .5;
+    transition: all .5s ease;
 }

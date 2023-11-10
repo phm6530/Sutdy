@@ -13,8 +13,8 @@ const createAndAppend = (parent, elementType, textContent = '', className = '') 
 const navDiv = createAndAppend(calendarElement, 'div', '', 'calendar-nav');
 const calendarDiv = createAndAppend(calendarElement, 'div', '', 'calendar');
 const todayDate = createAndAppend(navDiv, 'div' , '', 'calendar-month');
-const btnPrev = createAndAppend(navDiv, 'button', '<' , 'btn-prev');
-const btnNext = createAndAppend(navDiv, 'button', '>' , 'btn-next');
+const btnPrev = createAndAppend(navDiv, 'button', '' , 'btn-prev');
+const btnNext = createAndAppend(navDiv, 'button', '' , 'btn-next');
 
 // 날짜 배열로 ..
 const textDays = ['Sun','Mon','Tue','Wen','Thu','fri','Sat'];
@@ -42,7 +42,6 @@ const cusMonth = (item) => {
     } else {
         render(ViewYear, ViewMonth);
     }
-    render(ViewYear, ViewMonth);
     addClickHandler('td' , ClickEvent);
 }
 
@@ -76,7 +75,7 @@ const render = (year , month)=> {
    // 현재 날짜 정보 가져오기
     const today = new Date();
     html += '<tbody>';
-    console.log(isLastDay[month - 1]);
+    // console.log(isLastDay[month - 1]);
     for (let row = 0; day <= isLastDay[month - 1]; row++) {
         html += '<tr>';
         for (let col = 0; col < 7; col++) {
@@ -106,15 +105,17 @@ const addClickHandler = (ClassName ,  callback)=>{
     callback(target);
 }
 
-const ClickEvent = (div) =>{
+const ClickEvent = (div) => {
     div.forEach(e => {
         e.addEventListener('click', () => {
-            if(!e.classList.contains('NotThisMonth')){
+            if (!e.classList.contains('NotThisMonth')) {
                 if (e.classList.contains('active')) {
                     e.classList.remove('active');
                 } else {
                     div.forEach(del => del.classList.remove('active'));
                     e.classList.add('active');
+                    dayRender(ViewYear, ViewMonth, e.textContent);
+                    ViewDay = parseInt(e.textContent); // 업데이트 ViewDay
                 }
             }
         });

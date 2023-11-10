@@ -6,17 +6,205 @@
     <title>Calendar</title>
     <link rel="stylesheet" href="./reset.css">
     <link rel="stylesheet" href="./app.css">
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
     <!-- 캘린더 -->
-    <div id="myCalendar" class="myCalendar"></div>
-
+    <div class="wrap">
+        <div id="myCalendar" class="myCalendar"></div>
+        <div class="listArea">
+            <div id="todoList"></div>
+            <form onsubmit="return false">
+                <input type="text" id="todoInput">
+                <button type="submit" id="todoSubmit" >입력</button>
+            </form>
+        </div>
+    </div>
+    
 
 </body>
 <script src="./calendar.js"></script>
 <script>
+    const todoSubmit = document.getElementById('todoSubmit'); // 투두리스트 Submit
+    const todoListDiv = document.getElementById('todoList');  // 투두리스트 뿌려질 영역
 
+    // 더미 데이터
+    const todoArr = {
+        '202311' : {
+            '1' : [
+                {
+                    key : 0,
+                    date : `2023.11.09`,
+                    check : false,
+                    title : `첫번 째` 
+                },
+                {
+                    key : 1,
+                    date : `2023.11.09`,
+                    check : false,
+                    title : `두번 째` 
+                }
+
+            ],
+            '2' : [
+                {
+                    key : 0,
+                    date : `2023.11.09`,
+                    check : false,
+                    title : `오늘 할일` 
+                },
+                {
+                    key : 1,
+                    date : `2023.11.09`,
+                    check : false,
+                    title : `오늘 할일` 
+                }
+
+            ],
+            '10' : [
+                {
+                    key : 0,
+                    date : `2023.11.09`,
+                    check : false,
+                    title : `오늘 할일` 
+                },
+                {
+                    key : 1,
+                    date : `2023.11.09`,
+                    check : false,
+                    title : `오늘 할일` 
+                }
+
+            ]
+        }
+        
+    }
+
+    // Test 일 ,월
+    // let todoYear = '2023';
+    // let todoMonth = '11';
+    // let todoDay =  '01';
+    // const addDayhandelr = () =>{
+
+    //     dayRender();
+    // }
+
+
+
+    const renderTodoItem = (element) => {
+    const isCompleteClass = element.check? 'complete' : '';
+    // console.log(isCompleteClass);
+    return `
+        <div class="todoList ${isCompleteClass}" data-key="${element.key}" onclick="chkList(${element.key} , event)">
+            ${element.date} ${element.title}
+            <button onclick="delArr(${element.key} , event)">X</button>
+        </div>
+        `;
+    }
+
+    const renderTodoList = (Year, Month, day) => {
+        const selectMonth = todoArr[`${Year}${Month}`];
+        // console.log(selectMonth);
+        if (!selectMonth) {
+            return `<div class='todoList'>${Month}월은 일정이 없네요</div>`;
+        }
+        const selectDay = selectMonth[day];
+        let html = '';
+        if (!selectDay || selectDay.length === 0) {
+            return `<div class='todoList'>${day === ViewDay ? `오늘은 일정이 없네요!` : `${Month}월 ${day}일은 일정이 없습니다`} </div>`;
+        } else {
+            selectDay.forEach(element => {
+                html += renderTodoItem(element);
+            });
+        }
+        return html;
+    }
+
+    const dayRender = (Year, Month, day) => {
+        const todoListHtml = renderTodoList(Year, Month, day);
+        todoListDiv.innerHTML = todoListHtml;
+    }
+
+    console.log(todoArr[`${ViewYear}${ViewMonth}`][ViewDay])
+
+    const chkList = (item) => {
+        const chkChange = todoArr[`${ViewYear}${ViewMonth}`][ViewDay];
+        console.log( 'chkChange: ' ,chkChange);
+        console.log('chkList 인자 : ',item)
+        // console.log('month : ' , todoArr[`${ViewYear}${ViewMonth}`][ViewDay])
+        
+        chkChange.forEach((e)=>{
+            if(e.key === item){
+                e.check = !e.check;
+            }
+        });
+        // console.log(chkChange)
+        
+        const result = chkChange.find(e=>{ return e.key === item});
+        console.log(result);
+        
+
+        // 변경된 항목만을 업데이트하기 위해 해당 항목의 HTML을 다시 생성
+        const updatedTodoItemHtml = renderTodoItem(result);
+
+        // 해당 항목의 HTML을 부모 요소에 삽입 또는 업데이트
+        const todoItemDiv = todoListDiv.querySelector(`[data-key="${item}"]`);
+        // console.log("error? ",todoItemDiv); 
+        todoItemDiv.outerHTML = updatedTodoItemHtml;
+    }
+
+    const MSG = {
+        1 : '할일을 입력해주세요 !',
+        2 : '빈칸만 입력은 안돼요!'
+    }
+    
+    const delArr = (item , e) => {
+        e.stopPropagation(); // 상위 버블링 하는거 막는거임
+        if (confirm('삭제하시겠습니까?')) {
+            const targetArray = todoArr[`${ViewYear}${ViewMonth}`][ViewDay];
+            const find = targetArray.findIndex((e)=>{ return item === e.key });
+            // console.log(find);
+            if(find !== -1){
+                targetArray.splice(find , 1);
+            }
+            
+            dayRender(ViewYear, ViewMonth, ViewDay);
+        }
+    }
+    const iptTodo = document.getElementById('todoInput'); // todoList 적는 공간
+    todoSubmit.addEventListener('click', ()=>{
+        if(!iptTodo.value){
+            alert(MSG[1])
+            return;
+        }
+        else if(iptTodo.value.trim() === ''){
+            alert(MSG[2]);
+            return;
+        }
+        else{
+            let MonthChk =  todoArr[`${ViewYear}${ViewMonth}`];
+            if(!MonthChk){
+                todoArr[`${ViewYear}${ViewMonth}`] = {};
+            }
+            let dayChk = todoArr[`${ViewYear}${ViewMonth}`][ViewDay];
+            if(!dayChk){
+                todoArr[`${ViewYear}${ViewMonth}`][ViewDay] = [];
+            }
+            todoArr[`${ViewYear}${ViewMonth}`][ViewDay].push({
+                
+                key: dayChk ? dayChk[dayChk.length -1].key + 1 : 0,
+                date : `${ViewYear}.${ViewMonth}.${ViewDay}`,
+                check : false,
+                title : iptTodo.value,
+            });
+            iptTodo.value = '';
+            dayRender(ViewYear ,ViewMonth , ViewDay);
+        }
+    });
+    dayRender(ViewYear ,ViewMonth , ViewDay); //초기랜더링
+    // console.log(todoArr);
+
+ 
 </script>
 
 </html> 
