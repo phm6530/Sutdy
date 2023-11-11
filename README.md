@@ -17,7 +17,7 @@ yarn create react-app
 4. tailwind.config.js 설정
 content : ['경로/**/*.{jsx,js}']
 
-
+a
 
 # fontawesome 
 
