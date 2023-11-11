@@ -114,7 +114,7 @@ const ClickEvent = (div) => {
                 } else {
                     div.forEach(del => del.classList.remove('active'));
                     e.classList.add('active');
-                    dayRender(ViewYear, ViewMonth, e.textContent);
+                    renderTodoList(ViewYear, ViewMonth, e.textContent);
                     ViewDay = parseInt(e.textContent); // 업데이트 ViewDay
                 }
             }
