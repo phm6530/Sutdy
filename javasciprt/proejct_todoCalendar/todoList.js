@@ -53,6 +53,8 @@
         
     }
 
+  
+
     const MSG = {
         1 : '할일을 입력해주세요 !',
         2 : '빈칸만 입력은 안돼요!'
@@ -81,7 +83,7 @@
         return div;
     }
 
-
+    // 투두리스트 HTML 개별 생성
     const createTodoItemHTML = (element) => {
         const isCompleteClass = element.check ? 'complete' : '';
         const div = createDiv ('todoList');
@@ -92,19 +94,20 @@
         if(element.check){
             div.classList.add(isCompleteClass);
         }
-        
         div.setAttribute('onclick' , `chkList(${element.key})`);
         div.setAttribute('date-key' , `${element.key}`);
 
         divInfo.textContent = `${element.title} ${element.date}`;
         divInfo.append(btnDelete);
         div.append(divInfo);
-
+        
         return div;
     }
     
     // 랜더링
     const renderTodoList = (Year, Month, day) => {
+        
+        isWorkday(); // 달력에 확인 표시 추가
         const selectMonth = todoArr[`${Year}${Month}`];
         const testDIV = createDiv('todoList');
         let html;
@@ -118,16 +121,22 @@
                 testDIV.textContent = day === ViewDay ? `오늘은 일정이없네요` : `${Month}월 ${day}일은 일정이 없습니다`;
                 html = testDIV;
             } else {
+                todoListDiv.textContent = '';           
                 selectDay.forEach(element => {
                     todoListDiv.appendChild(createTodoItemHTML(element));
                 });
                 return;                    
             }    
         }
+        
         // console.log(typeof html)
         todoListDiv.textContent = '';
         todoListDiv.appendChild(html);
+        
     }
+
+
+    
 
     const chkList = (item) => {
         const chkChange = todoArr[`${ViewYear}${ViewMonth}`][ViewDay];
@@ -139,8 +148,10 @@
     //하나만 갱신할 함수
     const updateTodoItem = (element) => {
         const todoItemDiv = document.querySelector(`[date-key="${element.key}"]`);
-        todoItemDiv.outerHTML = createTodoItemHTML(element);
+        const stringDom = createTodoItemHTML(element).outerHTML;
+        todoItemDiv.outerHTML = stringDom;
     }
+
 
     const delArr = (item , e) => {
         e.stopPropagation(); // 상위 버블링 하는거 막는거임
@@ -155,6 +166,7 @@
             renderTodoList(ViewYear, ViewMonth, ViewDay);
         }
     }
+
 
     const iptTodo = document.getElementById('todoInput'); // todoList 적는 공간
     todoSubmit.addEventListener('click', ()=>{
@@ -184,9 +196,28 @@
             });
             iptTodo.value = '';
             renderTodoList(ViewYear ,ViewMonth , ViewDay);
+            
         }
     });
-
+    // console.log(ViewDay);
+    // console.log(todoArr[`${ViewYear}${ViewMonth}`]);
+    // console.log( todoArr[`${ViewYear}${ViewMonth}`][ViewDay][0]['date']);
+    const isWorkday = ()=>{
+        const ArrTest = todoArr[ViewYear + '' +ViewMonth];
+        const isWorkdayArr = [];
+        for(const item in ArrTest ){
+            isWorkdayArr.push(item);
+        }
+        console.log(isWorkdayArr);
+        const selectTd = document.querySelectorAll('.custum-calendar td');
+        const isWorkTodayArr = [];
+        
+        selectTd.forEach((e)=>{
+            isWorkdayArr.includes(e.textContent) ? e.classList.add('ddd') : e;
+        });
+    }
+   
+   
     renderTodoList(ViewYear ,ViewMonth , ViewDay); //초기랜더링
     // console.log(todoArr);
 
