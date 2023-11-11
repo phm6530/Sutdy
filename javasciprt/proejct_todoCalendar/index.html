@@ -18,6 +18,7 @@
                 <input type="text" id="todoInput">
                 <button type="submit" id="todoSubmit" >입력</button>
             </form>
+            <div id="ddd"></div>
         </div>
     </div>
     
@@ -61,16 +62,16 @@
                 }
 
             ],
-            '10' : [
+            '11' : [
                 {
                     key : 0,
-                    date : `2023.11.09`,
+                    date : `2023.11.11`,
                     check : false,
                     title : `오늘 할일` 
                 },
                 {
                     key : 1,
-                    date : `2023.11.09`,
+                    date : `2023.11.19`,
                     check : false,
                     title : `오늘 할일` 
                 }
@@ -80,6 +81,12 @@
         
     }
 
+    const MSG = {
+        1 : '할일을 입력해주세요 !',
+        2 : '빈칸만 입력은 안돼요!'
+    }
+    
+    
     // Test 일 ,월
     // let todoYear = '2023';
     // let todoMonth = '11';
@@ -92,26 +99,37 @@
 
 
     const renderTodoItem = (element) => {
-    const isCompleteClass = element.check? 'complete' : '';
-    // console.log(isCompleteClass);
-    return `
-        <div class="todoList ${isCompleteClass}" data-key="${element.key}" onclick="chkList(${element.key} , event)">
-            ${element.date} ${element.title}
-            <button onclick="delArr(${element.key} , event)">X</button>
-        </div>
-        `;
+        const isCompleteClass = element.check ? 'complete' : '';
+
+        // console.log(isCompleteClass);
+        const div = document.createElement('div');
+        const divInfo = document.createElement('div');
+        const btnDelete = document.createElement('button');
+       
+        div.classList.add('todoList');
+        divInfo.classList.add('todoInfo');
+        divInfo.appendChild(btnDelete);
+        divInfo.textContent = `${element.title} ${element.date}`;
+        div.appendChild(divInfo);
+        return div.outerHTML;
     }
+
+    
 
     const renderTodoList = (Year, Month, day) => {
         const selectMonth = todoArr[`${Year}${Month}`];
-        // console.log(selectMonth);
+        const testDIV = document.createElement('div');
+        testDIV.classList.add('todoList');
         if (!selectMonth) {
-            return `<div class='todoList'>${Month}월은 일정이 없네요</div>`;
+            result = testDIV.textContent = `${Month}월은 일정이 없네요`;
+            return testDIV.outerHTML;
         }
         const selectDay = selectMonth[day];
         let html = '';
         if (!selectDay || selectDay.length === 0) {
-            return `<div class='todoList'>${day === ViewDay ? `오늘은 일정이 없네요!` : `${Month}월 ${day}일은 일정이 없습니다`} </div>`;
+            return `<div class='todoList'>${day === ViewDay 
+                ? `오늘은 일정이 없네요!` 
+                : `${Month}월 ${day}일은 일정이 없습니다`} </div>`;
         } else {
             selectDay.forEach(element => {
                 html += renderTodoItem(element);
@@ -120,12 +138,13 @@
         return html;
     }
 
+
     const dayRender = (Year, Month, day) => {
         const todoListHtml = renderTodoList(Year, Month, day);
         todoListDiv.innerHTML = todoListHtml;
     }
 
-    console.log(todoArr[`${ViewYear}${ViewMonth}`][ViewDay])
+    // console.log(todoArr[`${ViewYear}${ViewMonth}`][ViewDay])
 
     const chkList = (item) => {
         const chkChange = todoArr[`${ViewYear}${ViewMonth}`][ViewDay];
@@ -153,11 +172,6 @@
         todoItemDiv.outerHTML = updatedTodoItemHtml;
     }
 
-    const MSG = {
-        1 : '할일을 입력해주세요 !',
-        2 : '빈칸만 입력은 안돼요!'
-    }
-    
     const delArr = (item , e) => {
         e.stopPropagation(); // 상위 버블링 하는거 막는거임
         if (confirm('삭제하시겠습니까?')) {
