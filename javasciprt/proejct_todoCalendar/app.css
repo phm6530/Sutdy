@@ -45,7 +45,8 @@ button{
 }
 
 button[type=submit]{
-    width: 200px;
+    /* width: 200px; */
+    width: 100%;
     /* color: #fff; */
     margin-top: 19px;
     /* background-color: #404893; */
@@ -64,7 +65,7 @@ button[type=submit]{
     display: inline-block;
     background-color: #e5e9f2;
     border-radius: 1rem;
-    box-shadow: -14px -14px 30px rgba(255, 255, 255, .8), 14px 14px 50px rgb(34 48 65 / 17%);
+    box-shadow: -14px -14px 30px rgba(255, 255, 255, .8), 14px 14px 20px rgb(34 48 65 / 10%);
     width: 90%;
     min-height: 516px;
     max-width: 400px;
@@ -190,8 +191,8 @@ table{
 
 /* 투두리스트 */
 .listArea{
-    width: 400px;
-    margin: 0 40px;
+    /* width: 400px; */
+    /* margin: 0 40px; */
     /* box-shadow: -14px -14px 30px rgba(255, 255, 255, .8), 14px 14px 50px rgb(34 48 65 / 17%); */
     min-height: 516px;
     /* padding: 30px; */
@@ -247,4 +248,9 @@ input[type=text]:focus{
     top: 40px;
     left: 50%;
     transform: translate(-50%,-50%);
+}
+
+.wrap_list{
+    margin: 0 30px;
+    width: 400px;
 }

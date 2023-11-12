@@ -20,7 +20,13 @@ const btnNext = createAndAppend(navDiv, 'button', '' , 'btn-next');
 const textDays = ['Sun','Mon','Tue','Wen','Thu','fri','Sat'];
 const textMonth = ['January','February','March','April','May','june','july','August','September','October','November','December'];
 
-//오늘 날짜
+const TodayDate = new Date();
+const fixedYear = TodayDate.getFullYear();
+const fixedMonth = TodayDate.getMonth() + 1;
+const fixedDay = TodayDate.getDate();
+const thisMonth = fixedYear + '' + fixedMonth;
+
+//선택 날짜
 const date = new Date();
 let ViewYear = date.getFullYear();
 let ViewMonth = date.getMonth() + 1;
@@ -33,6 +39,8 @@ const updateCalendarMonthYear = (year, month) => {
     render(ViewYear, ViewMonth);
 };
 
+
+
 const cusMonth = (item) => {
     item === 'prev' ? ViewMonth -= 1 : ViewMonth += 1;
     if(ViewMonth > 12){
@@ -44,6 +52,12 @@ const cusMonth = (item) => {
     }
     addClickHandler('td' , ClickEvent);
     isWorkday();
+
+    thisMonth === ViewYear + '' + ViewMonth 
+    ? renderTodoList(ViewYear ,ViewMonth , ViewDay) 
+    : renderNotThisMonth(ViewYear ,ViewMonth , ViewDay)
+
+    
 }
 
 //prev, next 버튼
@@ -88,7 +102,7 @@ const render = (year , month)=> {
             else if (day <= isLastDay[month - 1]) {
                 const currentDate = new Date(year, month - 1, day);
                 const isToday = currentDate.toDateString() === today.toDateString();
-                html += `<td class="${isToday ? 'today' : ''}">${day++}</td>`;
+                html += `<td class="${isToday ? 'today active' : ''}">${day++}</td>`;
             } else {
                 html += `<td class="NotThisMonth"></td>`;
             }

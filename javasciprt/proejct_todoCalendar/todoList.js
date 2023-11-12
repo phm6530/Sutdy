@@ -113,6 +113,29 @@
         
         return div;
     }
+
+
+    const renderNotThisMonth = (Year, Month, day) => {
+        const testDIV = createDiv('todoList');
+        const isMonth = todoArr[Year + '' + Month];
+        
+        if(!isMonth){
+            testDIV.textContent = `${Year}${Month}월은 일정이 없습니다 달력을 클릭하여 추가해주세요~!`;
+        }else{
+            const tester = Object.keys(isMonth);
+            console.log(tester);
+            console.log(isMonth[tester[0]].length);
+            tester.forEach((key)=>{
+
+                const resultDIV = createDiv('result');
+                resultDIV.textContent += `${key}  ${isMonth[key].length}`;
+                testDIV.appendChild(resultDIV);
+            });
+        }
+        let html = testDIV;
+        todoListDiv.textContent = '';
+        todoListDiv.appendChild(html);
+    }
     
     // 랜더링
     const renderTodoList = (Year, Month, day) => {
@@ -125,7 +148,7 @@
             testDIV.textContent = `${Month}월은 일정이 없네요`;
             html = testDIV;
         }
-        else{
+          else{
             const selectDay = selectMonth[day];
             if (!selectDay || selectDay.length === 0) {
                 testDIV.textContent = day === ViewDay ? `오늘은 일정이없네요` : `${Month}월 ${day}일은 일정이 없습니다`;
@@ -160,6 +183,7 @@
         const todoItemDiv = document.querySelector(`[date-key="${element.key}"]`);
         const stringDom = createTodoItemHTML(element).outerHTML;
         todoItemDiv.outerHTML = stringDom;
+        isWorkday();
         localStorage.setItem('Todolist', JSON.stringify(todoArr));
     }
     
@@ -185,7 +209,7 @@
             const monthKeys = Object.keys(todoArr);
             const monthKeyArr = {};
 
-            console.log('old 월 : ', monthKeys);
+            // console.log('old 월 : ', monthKeys);
             // monthKeys 배열을 순회하면서 빈 배열이 아닌 경우에만 새로운 객체에 추가
             monthKeys.forEach((idx) => {
                 if (Object.keys(todoArr[idx]).length !== 0) {
@@ -195,7 +219,7 @@
             
             // 새로운 객체로 기존 todoArr를 덮어씌움
             todoArr = monthKeyArr;
-            console.log('수정 arr : ', todoArr);
+            // console.log('수정 arr : ', todoArr);
         
             renderTodoList(ViewYear, ViewMonth, ViewDay);
         }
@@ -240,24 +264,21 @@
         for(const item in ArrTest ){
             isWorkdayArr.push(item);
         }
+
         const selectTd = document.querySelectorAll('.custum-calendar td');
         selectTd.forEach((e)=>{
-            isWorkdayArr.includes(e.textContent) ? e.classList.add('isWorkday') : e.classList.remove('isWorkday');
+            if( isWorkdayArr.includes(e.textContent)){
+                if(ArrTest[e.textContent].every(e => e.check ===true)){
+                    e.classList.add('isComplete');
+                }else{
+                    e.classList.remove('isComplete');
+                    e.classList.add('isWorkday');
+                }
+            }else{
+                e.classList.remove('isWorkday');
+            }
         });
     }
-
-    // const consolerr = localStorage.getItem('Todolist');
-    // console.log(consolerr);
-    
-    const findWorkday = todoArr[ViewYear + '' +ViewMonth];
-    // console.log(todoArr);
-    if(!findWorkday || findWorkday.length === 0){
-        // console.log('없음');
-    }else{
-        // console.log(findWorkday);
-    }
-   
-   
     renderTodoList(ViewYear ,ViewMonth , ViewDay); //초기랜더링
 
  
