@@ -127,7 +127,7 @@ table{
     box-shadow: inset 1px 1px 3px rgba(36, 36, 36, .15) , inset -4px -4px 10px rgb(255, 255, 255 ,.5);
 }
 .today:after{
-    content: "Today";
+    content: "";
     position: absolute;
     left: 23px;
     display: none;
@@ -235,4 +235,16 @@ input[type=text]:focus{
 .complete{
     opacity: .5;
     transition: all .5s ease;
+}
+
+.isWorkday{
+    position: relative;
+}
+.isWorkday::before{
+    content: "＊";
+    position: absolute;
+    color: #8b96eb;
+    top: 40px;
+    left: 50%;
+    transform: translate(-50%,-50%);
 }

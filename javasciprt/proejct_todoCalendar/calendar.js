@@ -43,6 +43,7 @@ const cusMonth = (item) => {
         render(ViewYear, ViewMonth);
     }
     addClickHandler('td' , ClickEvent);
+    isWorkday();
 }
 
 //prev, next 버튼
