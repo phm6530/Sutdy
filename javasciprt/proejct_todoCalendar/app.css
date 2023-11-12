@@ -119,6 +119,8 @@ table{
     margin-bottom: 10px;
     align-items: flex-start;
     /* border: 5px solid #ffffff30; */
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
 .today{
@@ -249,8 +251,21 @@ input[type=text]:focus{
     left: 50%;
     transform: translate(-50%,-50%);
 }
+.isComplete::before{
+    color: rgb(255, 5, 38);
+}
 
 .wrap_list{
     margin: 0 30px;
     width: 400px;
+}
+
+.result{
+    display: flex;
+    width: 100%;
+    /* background-color: red; */
+    justify-content: space-between;
+}
+.suc{
+    display: inline-block;
 }

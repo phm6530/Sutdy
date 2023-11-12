@@ -15,6 +15,9 @@ const calendarDiv = createAndAppend(calendarElement, 'div', '', 'calendar');
 const todayDate = createAndAppend(navDiv, 'div' , '', 'calendar-month');
 const btnPrev = createAndAppend(navDiv, 'button', '' , 'btn-prev');
 const btnNext = createAndAppend(navDiv, 'button', '' , 'btn-next');
+const thisMonthStatus = createAndAppend(navDiv, 'div', 'gsg', 'status');
+
+thisMonthStatus.addEventListener('click', () => renderNotThisMonth(ViewYear ,ViewMonth , ViewDay));
 
 // 날짜 배열로 ..
 const textDays = ['Sun','Mon','Tue','Wen','Thu','fri','Sat'];
@@ -54,7 +57,8 @@ const cusMonth = (item) => {
     isWorkday();
 
     thisMonth === ViewYear + '' + ViewMonth 
-    ? renderTodoList(ViewYear ,ViewMonth , ViewDay) 
+    // ? renderTodoList(ViewYear ,ViewMonth , ViewDay) 
+    ? renderNotThisMonth(ViewYear ,ViewMonth , ViewDay)
     : renderNotThisMonth(ViewYear ,ViewMonth , ViewDay)
 
     
@@ -63,6 +67,8 @@ const cusMonth = (item) => {
 //prev, next 버튼
 btnPrev.addEventListener('click', () => cusMonth('prev'));
 btnNext.addEventListener('click', () => cusMonth('next'));
+
+
 
 // 2월 때문에 넣은 윤년.. 계산법모름 그냥 붙여넣음
 function isLeapYear(year) {
@@ -119,6 +125,15 @@ const addClickHandler = (ClassName ,  callback)=>{
     const target = document.querySelectorAll(ClassName);
     callback(target);
 }
+
+const targetclass = document.querySelector('.status');
+
+targetclass.addEventListener('click', () => {
+    const targetElements = document.querySelectorAll('td');
+    targetElements.forEach(tdElement => {
+        tdElement.classList.remove('active');
+    });
+});
 
 const ClickEvent = (div) => {
     div.forEach(e => {
