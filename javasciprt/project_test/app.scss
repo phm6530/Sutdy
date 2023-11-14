@@ -1,0 +1,21 @@
+$font-size : 25px;
+
+h1{
+    color: white;   
+    background: #000;
+    font-size: $font-size; 
+    &:hover{
+        background: red;
+    }
+
+}
+    
+@mixin border($color){
+    border: 1px solid $color;
+}
+
+.this{@include border(rgb(158, 86, 86));
+    &:hover{
+        background-color: #000;
+    }
+}

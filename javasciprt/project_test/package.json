@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "sass": "^1.69.5"
+  },
+  
+    "scripts": {
+      "scss": "sass app.scss app.css"
+    }
+  
+  
+}
