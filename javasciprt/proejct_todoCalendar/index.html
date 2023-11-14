@@ -9,46 +9,52 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
-    
-    <div class="wrap">
-        <!-- 캘린더 -->
-        <div id="myCalendar" class="myCalendar"></div>
 
-        <!-- TodoList -->
-        <div class="wrap_list">
-            <div class="listArea">
-                <div id="todoList"></div>
+    <div class="container">
+        <div id="waether"></div>
+        <div class="wrap">
+            <!-- 캘린더 -->
+            <div id="myCalendar" class="myCalendar"></div>
+            <!-- TodoList -->
+            <div class="wrap_list">
+                <div class="listArea">
+                    <div id="todoList"></div>
+                </div>
             </div>
         </div>
     </div>
+    
 
-    <div id="waether"></div>
+ 
 </body>
 <script src="./calendar.js"></script>
 <script src="./todoList.js"></script>
 
 <script>
 const apiURI = 'http://api.openweathermap.org/data/2.5/weather?q=seoul&appid=4ff4e9b9bb000db3b5905140478fd229';
+const test = document.getElementById('waether');
+const createDiv3 = (what , Name)=>{
+        const div = document.createElement('div');
+        what === 1 
+            ? div.classList.add(Name) 
+            : div.setAttribute('id', Name);
+        return div;
+}
+    
+const loadingText = createDiv(1, 'loading');
+loadingText.textContent = 'Loading...';
+test.appendChild(loadingText);
 
-// 데이터를 반환하는 Promise 함수
-const fetchData = (url) => {
-    return new Promise((resolve, reject) => {
-        fetch(url)
-            .then(res => {
-                if (res.ok) {
-                    return res.json();
-                } else {
-                    throw new Error('error!!');
-                }
-            })
-            .then(data => resolve(data))
-            .catch(error => reject(error));
-    });
-};
-
-// 데이터 사용 함수
-const processData = (data) => {
-    const weatherData = {
+fetch(apiURI)
+.then(response =>{
+    if(response.ok){
+        return response.json();
+    }else{
+        throw new Error('ERROR!!!');
+    }
+})
+.then(data => {
+    const weather = {
         currentTemperature: data.main.temp - 273.15,
         currentHumidity: data.main.humidity,
         weatherMain: data.weather[0].main,
@@ -58,26 +64,18 @@ const processData = (data) => {
         country: data.sys.country,
         cityName: data.name,
         cloudiness: data.clouds.all
-    };
-    return weatherData;
-};
+    }
+    test.removeChild(loadingText);
 
-// 데이터 가져오기
-const weatherPromise = fetchData(apiURI);
+    const text = createDiv3(1 , 'test');
+    text.textContent = weather.country;
+    text.textContent += weather.cityName;
+    console.log(weather.country);
+    test.appendChild(text);
 
-// Promise가 완료된 후 처리
-weatherPromise
-    .then(data => {
-        const processedData = processData(data);
-        console.log(processedData);
-
-        // 이후에 필요한 작업 수행
-    })
-    .catch(error => {
-        console.error('데이터 못가져옴 ', error);
-    });
-
-console.log(weatherPromise);
+    
+    weather.weatherIcon
+});
 
 // 여기서는 weatherPromise가 Promise 객체이므로, then()이나 catch()를 사용할 수 있습니다.
 

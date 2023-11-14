@@ -96,53 +96,64 @@
         input.classList.add(className);
         return input;
     }
-
-    const ListSubmit = () =>{
+    const createForm = () => {
         const addForm = document.createElement('form');
-        const input = creatInput('todoInput' , 'text');
+        const input = creatInput('todoInput', 'text');
         input.placeholder = '일정을 입력해주세요';
         addForm.setAttribute('id', 'form');
         addForm.setAttribute('onsubmit', 'return false');
-
-        const todoSubmit = idClassButton('todoSubmit')
+    
+        const todoSubmit = idClassButton('todoSubmit');
         todoSubmit.textContent = 'Add';
-
+    
         addForm.appendChild(input);
         addForm.appendChild(todoSubmit);
         wrapList.appendChild(addForm);
-
-        const iptTodo = document.getElementById('todoInput'); // todoList 적는 공간
-        todoSubmit.addEventListener('click', () => {
-            if (!iptTodo.value) {
-                alert(MSG[1])
-                return;
-            } else if (iptTodo.value.trim() === '') {
-                alert(MSG[2]);
-                return;
-            } else {
-                let MonthChk = todoArr[`${ViewYear}${ViewMonth}`];
-                if (!MonthChk) {
-                    todoArr[`${ViewYear}${ViewMonth}`] = {};
-                }
-                let dayChk = todoArr[`${ViewYear}${ViewMonth}`][ViewDay];
-                if (!dayChk) {
-                    todoArr[`${ViewYear}${ViewMonth}`][ViewDay] = [];
-                }
-                todoArr[`${ViewYear}${ViewMonth}`][ViewDay].push({
     
-                    key: !dayChk || dayChk.length === 0 ? 0 : dayChk[dayChk.length - 1].key + 1,
-                    date: `${ViewYear}.${ViewMonth}.${ViewDay}`,
-                    check: false,
-                    title: iptTodo.value,
-                });
+        const iptTodo = document.getElementById('todoInput');
+        return { addForm, iptTodo, todoSubmit };
+    };
+    
+    const validateInput = (value) => {
+        if (!value) {
+            alert(MSG[1]);
+            return false;
+        } else if (value.trim() === '') {
+            alert(MSG[2]);
+            return false;
+        }
+        return true;
+    };
+    
+    const addToTodoArr = (value) => {
+        let MonthChk = todoArr[`${ViewYear}${ViewMonth}`];
+        if (!MonthChk) {
+            todoArr[`${ViewYear}${ViewMonth}`] = {};
+        }
+        let dayChk = todoArr[`${ViewYear}${ViewMonth}`][ViewDay];
+        if (!dayChk) {
+            todoArr[`${ViewYear}${ViewMonth}`][ViewDay] = [];
+        }
+        todoArr[`${ViewYear}${ViewMonth}`][ViewDay].push({
+            key: !dayChk || dayChk.length === 0 ? 0 : dayChk[dayChk.length - 1].key + 1,
+            date: `${ViewYear}.${ViewMonth}.${ViewDay}`,
+            check: false,
+            title: value,
+        });
+    };
+    
+    const ListSubmit = () => {
+        const { addForm, iptTodo, todoSubmit } = createForm();
+    
+        todoSubmit.addEventListener('click', () => {
+            const inputValue = iptTodo.value;
+            if (validateInput(inputValue)) {
+                addToTodoArr(inputValue);
                 iptTodo.value = '';
                 renderTodoList(ViewYear, ViewMonth, ViewDay);
-    
             }
         });
-
-    }
-    
+    };
 
     const createTodoItemHTML = (element) => {
         
@@ -170,11 +181,6 @@
         const btnCheck = creatSpan('btnCheck');
         btnCheck.textContent = `${element.title}`;
 
-        const addCheck = document.createElement('input');
-        const getId = `chk${element.key}`;
-        addCheck.setAttribute('id', getId);
-        element.check ? addCheck.setAttribute('checked', "") : undefined;
-        
     
         const Label = document.createElement('label');
         Label.setAttribute('for', `chk${element.key}`);
@@ -182,12 +188,10 @@
         Label.appendChild(icon);
         Label.appendChild(btnCheck);
         Label.setAttribute('onclick', `chkList(${element.key})`);
-        addCheck.setAttribute('type' , 'checkbox');
-        addCheck.classList.add('radio');
         
 
         
-        workTitle.appendChild(addCheck);
+        // workTitle.appendChild(addCheck);
         
         workDate.textContent = element.date;
         workTitle.appendChild(Label)
@@ -206,10 +210,11 @@
     const renderNotThisMonth = (Year, Month, day) => {
         const testDIV = createDiv('todoList');
         const isMonth = todoArr[Year + '' + Month];
-
+        testDIV.classList.add('infoClass');
         if (!isMonth) {
             testDIV.textContent = `${Year}${Month}월은 일정이 없습니다 달력을 클릭하여 추가해주세요~!`;
         } else {
+           
             const num = Object.keys(isMonth);
             const Sum = num.reduce((acc, val) => {
                 // console.log(val);
@@ -222,8 +227,6 @@
                 acc += trueArr.length;
                 return acc;
             }, 0);
-            console.log(falseSum);
-
             testDIV.textContent += `${Month}월에는 총 일정이\n ${Sum}건이 있어요! ${Math.floor(falseSum/Sum * 100)}% 완료하셨네요!`;
     
             num.forEach((key) => {
@@ -261,13 +264,16 @@
         isWorkday(); // 달력에 확인 표시 추가
         const selectMonth = todoArr[`${Year}${Month}`];
         const testDIV = createDiv('todoList');
+    
         let html;
         if (!selectMonth) {
             testDIV.textContent = `${Month}월은 일정이 없네요`;
+            testDIV.classList.add('noWorkmonth');
             html = testDIV;
         } else {
             const selectDay = selectMonth[day];
             if (!selectDay || selectDay.length === 0) {
+                testDIV.classList.add('infoClass');
                 testDIV.textContent = day === ViewDay ? `오늘은 일정이없네요` : `${Month}월 ${day}일은 일정이 없습니다`;
                 html = testDIV;
             } else {
@@ -290,10 +296,9 @@
     const chkList = (item) => {
         const chkChange = todoArr[`${ViewYear}${ViewMonth}`][ViewDay];
         chkChange.forEach((e) => e.key === item ? e.check = !e.check : e.key);
-
+        console.log(item);
         localStorage.setItem('Todolist', JSON.stringify(todoArr));
         isWorkday();
-        console.log(item);
         const select = document.querySelector(`[date-key="${item}"]`);
         select.classList.toggle('complete');
         const findChkindex = chkChange.find(e => {
