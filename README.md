@@ -1,10 +1,11 @@
 # Sutdy
-
 JS / react Study ... 
 
 
 # 프로젝트 생성 명령어 
 yarn create react-app 
+
+
 
 # 테일윈드 초기 설치
 1. yarn add -D tailwindcss
@@ -28,3 +29,11 @@ Free 아이콘 라이브러리 설치
 
 3. yarn add --save @fortawesome/react-fontawesome@latest
 Font Awesome을 React 컴포넌트 형태로 사용 할 수 있게하는 패키지 설치
+
+
+
+# Yarn
+ - yarn install
+
+# Scss
+- yarn add sass
