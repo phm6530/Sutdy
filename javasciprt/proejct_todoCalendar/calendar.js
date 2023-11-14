@@ -15,9 +15,10 @@ const calendarDiv = createAndAppend(calendarElement, 'div', '', 'calendar');
 const todayDate = createAndAppend(navDiv, 'div' , '', 'calendar-month');
 const btnPrev = createAndAppend(navDiv, 'button', '' , 'btn-prev');
 const btnNext = createAndAppend(navDiv, 'button', '' , 'btn-next');
-const thisMonthStatus = createAndAppend(navDiv, 'div', 'gsg', 'status');
+const thisMonthStatus = createAndAppend(navDiv, 'div', '', 'nav_bar');
+const StateTable = createAndAppend(thisMonthStatus, 'div', 'Status Table', 'status');
 
-thisMonthStatus.addEventListener('click', () => renderNotThisMonth(ViewYear ,ViewMonth , ViewDay));
+StateTable.addEventListener('click', () => renderNotThisMonth(ViewYear ,ViewMonth , ViewDay));
 
 // 날짜 배열로 ..
 const textDays = ['Sun','Mon','Tue','Wen','Thu','fri','Sat'];
@@ -57,8 +58,7 @@ const cusMonth = (item) => {
     isWorkday();
 
     thisMonth === ViewYear + '' + ViewMonth 
-    // ? renderTodoList(ViewYear ,ViewMonth , ViewDay) 
-    ? renderNotThisMonth(ViewYear ,ViewMonth , ViewDay)
+    ? renderTodoList(ViewYear ,ViewMonth , ViewDay) 
     : renderNotThisMonth(ViewYear ,ViewMonth , ViewDay)
 
     
@@ -108,7 +108,7 @@ const render = (year , month)=> {
             else if (day <= isLastDay[month - 1]) {
                 const currentDate = new Date(year, month - 1, day);
                 const isToday = currentDate.toDateString() === today.toDateString();
-                html += `<td class="${isToday ? 'today active' : ''}">${day++}</td>`;
+                html += `<td class="${isToday ? 'today' : ''}">${day++}</td>`;
             } else {
                 html += `<td class="NotThisMonth"></td>`;
             }

@@ -1,3 +1,4 @@
+    const wrapList = document.querySelector('.wrap_list'); // Todo Wrap
     const todoListDiv = document.getElementById('todoList'); // 투두리스트 뿌려질 영역
     const localData = localStorage.getItem('Todolist');
 
@@ -81,72 +82,181 @@
         return div;
     }
 
-    const todoSubmit = idClassButton('todoSubmit')
-    todoSubmit.textContent = '입력';
-    const form = document.getElementById('form');
-    form.appendChild(todoSubmit);
+    // input 타입생성
+    const creatInput = (id, type) =>{
+        const input = document.createElement('input');
+        input.setAttribute('id' , id);
+        input.setAttribute( 'type' , type);
+        return input;
+    }
 
-    // 투두리스트 HTML 개별 생성
+    // span 생성
+    const creatSpan = (className) =>{
+        const input = document.createElement('span');
+        input.classList.add(className);
+        return input;
+    }
+
+    const ListSubmit = () =>{
+        const addForm = document.createElement('form');
+        const input = creatInput('todoInput' , 'text');
+        input.placeholder = '일정을 입력해주세요';
+        addForm.setAttribute('id', 'form');
+        addForm.setAttribute('onsubmit', 'return false');
+
+        const todoSubmit = idClassButton('todoSubmit')
+        todoSubmit.textContent = 'Add';
+
+        addForm.appendChild(input);
+        addForm.appendChild(todoSubmit);
+        wrapList.appendChild(addForm);
+
+        const iptTodo = document.getElementById('todoInput'); // todoList 적는 공간
+        todoSubmit.addEventListener('click', () => {
+            if (!iptTodo.value) {
+                alert(MSG[1])
+                return;
+            } else if (iptTodo.value.trim() === '') {
+                alert(MSG[2]);
+                return;
+            } else {
+                let MonthChk = todoArr[`${ViewYear}${ViewMonth}`];
+                if (!MonthChk) {
+                    todoArr[`${ViewYear}${ViewMonth}`] = {};
+                }
+                let dayChk = todoArr[`${ViewYear}${ViewMonth}`][ViewDay];
+                if (!dayChk) {
+                    todoArr[`${ViewYear}${ViewMonth}`][ViewDay] = [];
+                }
+                todoArr[`${ViewYear}${ViewMonth}`][ViewDay].push({
+    
+                    key: !dayChk || dayChk.length === 0 ? 0 : dayChk[dayChk.length - 1].key + 1,
+                    date: `${ViewYear}.${ViewMonth}.${ViewDay}`,
+                    check: false,
+                    title: iptTodo.value,
+                });
+                iptTodo.value = '';
+                renderTodoList(ViewYear, ViewMonth, ViewDay);
+    
+            }
+        });
+
+    }
+    
+
     const createTodoItemHTML = (element) => {
-        const isCompleteClass = element.check ? 'complete' : '';
+        
+        // const isCompleteClass = chkTest(element);
         const div = createDiv('todoList');
         const divInfo = createDiv('todoInfo');
-
         const btnDelete = createButton(`delArr( ${element.key} , event)`);
+        btnDelete.classList.add('deleteIcon' , 'centerIcon');
+        
+        element.check === true ? div.classList.add('complete') : undefined ;
+    
+        // if (element.check) {
+        //     div.classList.add(isCompleteClass);
+        // }
+        
 
-        if (element.check) {
-            div.classList.add(isCompleteClass);
-        }
-        div.setAttribute('onclick', `chkList(${element.key})`);
         div.setAttribute('date-key', `${element.key}`);
+        const icon = document.createElement('i');
+        icon.classList.add('fa','fa-check');
+    
+    
+        const workText = createDiv('workText');
+        const workTitle = creatSpan('workTitle');
+        const workDate = creatSpan('workDate');
+        const btnCheck = creatSpan('btnCheck');
+        btnCheck.textContent = `${element.title}`;
 
-        divInfo.textContent = `${element.title} ${element.date}`;
+        const addCheck = document.createElement('input');
+        const getId = `chk${element.key}`;
+        addCheck.setAttribute('id', getId);
+        element.check ? addCheck.setAttribute('checked', "") : undefined;
+        
+    
+        const Label = document.createElement('label');
+        Label.setAttribute('for', `chk${element.key}`);
+        Label.classList.add('radio-label');
+        Label.appendChild(icon);
+        Label.appendChild(btnCheck);
+        Label.setAttribute('onclick', `chkList(${element.key})`);
+        addCheck.setAttribute('type' , 'checkbox');
+        addCheck.classList.add('radio');
+        
+
+        
+        workTitle.appendChild(addCheck);
+        
+        workDate.textContent = element.date;
+        workTitle.appendChild(Label)
+        workText.appendChild(workTitle);
+        workText.appendChild(workDate);
+        // divInfo.textContent = `${element.key + 1} ${element.title} ${element.date}`;
+        divInfo.append(workText);
         divInfo.append(btnDelete);
         div.append(divInfo);
 
         return div;
     }
-
+    
+    
 
     const renderNotThisMonth = (Year, Month, day) => {
         const testDIV = createDiv('todoList');
-        
         const isMonth = todoArr[Year + '' + Month];
-       
+
         if (!isMonth) {
             testDIV.textContent = `${Year}${Month}월은 일정이 없습니다 달력을 클릭하여 추가해주세요~!`;
         } else {
             const num = Object.keys(isMonth);
             const Sum = num.reduce((acc, val) => {
+                // console.log(val);
                 acc += isMonth[val].length
                 return acc;
             }, 0);
 
-            testDIV.textContent += `${Year}월에는 총 일정이\n ${Sum}건이 있어요!`;
+            const falseSum = num.reduce((acc , val)=> {
+                const trueArr = isMonth[val].filter((e)=> e.check === true );
+                acc += trueArr.length;
+                return acc;
+            }, 0);
+            console.log(falseSum);
+
+            testDIV.textContent += `${Month}월에는 총 일정이\n ${Sum}건이 있어요! ${Math.floor(falseSum/Sum * 100)}% 완료하셨네요!`;
+    
             num.forEach((key) => {
-                const isSucusess = createDiv('suc');
+                const isSucusess = createDiv('YoN');
                 const resultDIV = createDiv('result');
+                resultDIV.setAttribute('onClick',` renderTodoList(ViewYear, ViewMonth, ${key});`);
                 resultDIV.textContent += `${key}일 
                 ${isMonth[key].reduce((acc , e)=>{
                     e.check === true ? acc ++ : acc ;
                     return acc;
                 },0)} 
                 / ${isMonth[key].length}`;
-                isSucusess.textContent = isMonth[key].every(e => e.check === true) ?  '완료' : '미완료';
-                
+                isSucusess.textContent = isMonth[key].every(e => e.check === true) ?  'Complete' : 'NotYet';
+                isMonth[key].every(e => e.check === true) ? isSucusess.classList.add('end'): isSucusess.classList.add('no');
                 resultDIV.appendChild(isSucusess);
                 testDIV.appendChild(resultDIV);
             });
+            
         }
 
-        let html = testDIV;
+        
         todoListDiv.textContent = '';
-        todoListDiv.appendChild(html);
+        todoListDiv.appendChild(testDIV);
         isWorkday();
     }
 
     // 랜더링
     const renderTodoList = (Year, Month, day) => {
+        ViewDay = day;
+        if (!document.getElementById('form')) {
+            ListSubmit();
+        }
+     
         // console.log(todoArr);
         isWorkday(); // 달력에 확인 표시 추가
         const selectMonth = todoArr[`${Year}${Month}`];
@@ -174,27 +284,31 @@
         localStorage.setItem('Todolist', JSON.stringify(todoArr));
         todoListDiv.textContent = '';
         todoListDiv.appendChild(html);
-
+       
     }
-
 
     const chkList = (item) => {
         const chkChange = todoArr[`${ViewYear}${ViewMonth}`][ViewDay];
         chkChange.forEach((e) => e.key === item ? e.check = !e.check : e.key);
+
+        localStorage.setItem('Todolist', JSON.stringify(todoArr));
+        isWorkday();
+        console.log(item);
+        const select = document.querySelector(`[date-key="${item}"]`);
+        select.classList.toggle('complete');
         const findChkindex = chkChange.find(e => {
             return e.key === item
         });
-        updateTodoItem(findChkindex)
+        // updateTodoItem(findChkindex)
     }
 
     //하나만 갱신할 함수
-    const updateTodoItem = (element) => {
-        const todoItemDiv = document.querySelector(`[date-key="${element.key}"]`);
-        const stringDom = createTodoItemHTML(element).outerHTML;
-        todoItemDiv.outerHTML = stringDom;
-        isWorkday();
-        localStorage.setItem('Todolist', JSON.stringify(todoArr));
-    }
+    // const updateTodoItem = (element) => {
+    //     // const todoItemDiv = document.querySelector(`[date-key="${element.key}"]`);
+    //     // const stringDom = createTodoItemHTML(element).outerHTML;
+    //     // todoItemDiv.outerHTML = stringDom;
+    //     isWorkday();
+    // }
 
     const delArr = (item, e) => {
         e.stopPropagation(); // 상위 버블링 하는거 막는거임
@@ -231,61 +345,39 @@
             // console.log('수정 arr : ', todoArr);
 
             renderTodoList(ViewYear, ViewMonth, ViewDay);
+            isWorkday();
         }
     };
 
 
-    const iptTodo = document.getElementById('todoInput'); // todoList 적는 공간
-    todoSubmit.addEventListener('click', () => {
-        if (!iptTodo.value) {
-            alert(MSG[1])
-            return;
-        } else if (iptTodo.value.trim() === '') {
-            alert(MSG[2]);
-            return;
-        } else {
-            let MonthChk = todoArr[`${ViewYear}${ViewMonth}`];
-            if (!MonthChk) {
-                todoArr[`${ViewYear}${ViewMonth}`] = {};
-            }
-            let dayChk = todoArr[`${ViewYear}${ViewMonth}`][ViewDay];
-            if (!dayChk) {
-                todoArr[`${ViewYear}${ViewMonth}`][ViewDay] = [];
-            }
-            todoArr[`${ViewYear}${ViewMonth}`][ViewDay].push({
 
-                key: !dayChk || dayChk.length === 0 ? 0 : dayChk[dayChk.length - 1].key + 1,
-                date: `${ViewYear}.${ViewMonth}.${ViewDay}`,
-                check: false,
-                title: iptTodo.value,
-            });
-            iptTodo.value = '';
-            renderTodoList(ViewYear, ViewMonth, ViewDay);
-
-        }
-    });
 
     const isWorkday = () => {
-        const ArrTest = todoArr[ViewYear + '' + ViewMonth];
-        const isWorkdayArr = [];
-        for (const item in ArrTest) {
-            isWorkdayArr.push(item);
-        }
+        const ArrItem = todoArr[ViewYear + '' + ViewMonth];
+        const workdayArray = ArrItem ? Object.keys(ArrItem) : [];
+        const tdElements = document.querySelectorAll('.custum-calendar td');
 
-        const selectTd = document.querySelectorAll('.custum-calendar td');
-        selectTd.forEach((e) => {
-            if (isWorkdayArr.includes(e.textContent)) {
-                if (ArrTest[e.textContent].every(e => e.check === true)) {
-                    e.classList.add('isWorkday');
-                    e.classList.add('isComplete');
-                } else {
-                    e.classList.remove('isComplete');
-                    e.classList.add('isWorkday');
-                }
+        tdElements.forEach((element) => {
+            const day = element.textContent;
+    
+            if (workdayArray.includes(day)) {
+                const allCompleted = ArrItem[day].every((item) => item.check === true);
+                element.classList.toggle('isComplete', allCompleted);
+                element.classList.add('isWorkday');
             } else {
-                e.classList.remove('isWorkday');
+                element.classList.remove('isComplete', 'isWorkday');
             }
         });
-    }
+   }
+
+    // document.addEventListener('DOMContentLoaded',()=>{
+    //         const hat = document.querySelectorAll('label');
+    //         hat.forEach((e)=>{
+    //             e.addEventListener('click',()=>{
+                    
+    //             });
+    //         });
+    // });
+   
     renderTodoList(ViewYear, ViewMonth, ViewDay); //초기랜더링
-    // renderNotThisMonth(ViewYear ,ViewMonth , ViewDay)
+    // renderNotThisMonth(ViewYear ,ViewMonth , ViewDay);
