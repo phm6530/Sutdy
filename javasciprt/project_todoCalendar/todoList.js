@@ -57,7 +57,8 @@
     let todoArr = !localData ? {} : JSON.parse(localData);
     const MSG = {
         1: '할일을 입력해주세요 !',
-        2: '빈칸만 입력은 안돼요!'
+        2: '빈칸만 입력은 안돼요!',
+        3: '일정을 입력해주세요!'
     }
 
     // btn id 반영
@@ -96,10 +97,11 @@
         input.classList.add(className);
         return input;
     }
+    
     const createForm = () => {
         const addForm = document.createElement('form');
         const input = creatInput('todoInput', 'text');
-        input.placeholder = '일정을 입력해주세요';
+        input.placeholder = MSG[3];
         addForm.setAttribute('id', 'form');
         addForm.setAttribute('onsubmit', 'return false');
     
@@ -162,6 +164,8 @@
         const divInfo = createDiv('todoInfo');
         const btnDelete = createButton(`delArr( ${element.key} , event)`);
         btnDelete.classList.add('deleteIcon' , 'centerIcon');
+        div.setAttribute('onclick', `chkList(${element.key})`);
+
         
         element.check === true ? div.classList.add('complete') : undefined ;
     
@@ -187,7 +191,6 @@
         Label.classList.add('radio-label');
         Label.appendChild(icon);
         Label.appendChild(btnCheck);
-        Label.setAttribute('onclick', `chkList(${element.key})`);
         
 
         
@@ -296,7 +299,6 @@
     const chkList = (item) => {
         const chkChange = todoArr[`${ViewYear}${ViewMonth}`][ViewDay];
         chkChange.forEach((e) => e.key === item ? e.check = !e.check : e.key);
-        console.log(item);
         localStorage.setItem('Todolist', JSON.stringify(todoArr));
         isWorkday();
         const select = document.querySelector(`[date-key="${item}"]`);

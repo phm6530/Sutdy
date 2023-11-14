@@ -11,15 +11,7 @@
 
 .container {
   width: 1000px;
-}
-
-#waether {
-  border-radius: 1rem;
-  padding: 14px;
-  box-shadow: -4px -4px 15px rgba(255, 255, 255, 0.7), 4px 4px 15px rgba(36, 36, 36, 0.15);
-  position: relative;
-  font-family: var(--title-font);
-  margin-bottom: 20px;
+  margin-top: 50px;
 }
 
 .centerIcon::after {
@@ -66,16 +58,12 @@
 body {
   background-color: #e2e6ef;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   height: 100vh;
   align-content: center;
   align-items: center;
   color: #333;
   flex-direction: column;
-}
-
-ul, li, h1, h2, p, b {
-  color: #fff;
 }
 
 button {
@@ -404,10 +392,6 @@ input[type=checkbox] {
 .radio-label {
   display: inline-block;
   cursor: pointer;
-  -webkit-transition: all 0.3s ease-out;
-  -moz-transition: all 0.3s ease-out;
-  -ms-transition: all 0.3s ease-out;
-  -o-transition: all 0.3s ease-out;
   transition: all 0.3s ease-out;
 }
 
@@ -415,10 +399,6 @@ input[type=checkbox] {
   margin-right: 10px;
   color: #3c85b5;
   opacity: 0;
-  -webkit-transition: opacity 0.3s ease-out;
-  -moz-transition: opacity 0.3s ease-out;
-  -ms-transition: opacity 0.3s ease-out;
-  -o-transition: opacity 0.3s ease-out;
   transition: opacity 0.3s ease-out;
 }
 
@@ -429,23 +409,11 @@ input[type=checkbox] {
 .radio-label span {
   display: inline-block;
   font-size: 14px;
-  -webkit-transition: all 0.3s ease-out;
-  -moz-transition: all 0.3s ease-out;
-  -ms-transition: all 0.3s ease-out;
-  -o-transition: all 0.3s ease-out;
   transition: all 0.3s ease-out;
-  -webkit-transform: translateX(-13px);
-  -moz-transform: translateX(-13px);
-  -ms-transform: translateX(-13px);
-  -o-transform: translateX(-13px);
   transform: translateX(-20px);
 }
 
 .complete .radio-label span {
-  -webkit-transform: translateX(0);
-  -moz-transform: translateX(0);
-  -ms-transform: translateX(0);
-  -o-transform: translateX(0);
   transform: translateX(0);
 }
 
@@ -526,4 +494,33 @@ input[type=checkbox] {
   display: none;
 }
 
-/*# sourceMappingURL=app.css.map */
+#waether {
+  border-radius: 1rem;
+  padding: 14px;
+  box-shadow: -4px -4px 15px rgba(255, 255, 255, 0.7), 4px 4px 15px rgba(36, 36, 36, 0.15);
+  position: relative;
+  font-family: var(--title-font);
+  margin-bottom: 20px;
+  height: 100px;
+}
+
+.weatherWrap {
+  display: flex;
+  animation: ani 1s ease;
+}
+.weatherWrap img {
+  width: 50%;
+}
+
+.weatherCityName {
+  font-size: 20px;
+}
+
+@keyframes ani {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}/*# sourceMappingURL=app.css.map */

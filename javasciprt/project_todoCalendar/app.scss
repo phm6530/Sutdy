@@ -26,12 +26,9 @@ $width : 1000px;
 
 .container{
     width: $width;
+    margin-top: 50px
 }
-#waether{
-    @include boxStyle();
-    font-family: var(--title-font);
-    margin-bottom: 20px;
-}
+
 
 
 .centerIcon::after{
@@ -75,16 +72,14 @@ $width : 1000px;
 body{
     background-color: #e2e6ef;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     height: 100vh;
     align-content: center;
     align-items: center;
     color: #333;
     flex-direction: column;
 }
-ul,li,h1,h2,p,b{
-    color: #fff;
-}
+
 button{
     cursor: pointer;
     width: 40px;
@@ -544,3 +539,37 @@ input[type=checkbox] {display:none;}
         display: none;
     }
 }
+
+
+// Weather
+
+$WeatherCityFont : 20px;
+#waether{
+    @include boxStyle();
+    font-family: var(--title-font);
+    margin-bottom: 20px;
+    height: 100px;
+}
+
+.weatherWrap{
+    display: flex;
+    animation: ani 1s ease;
+    img{
+        width: 50%;
+    }
+}
+
+.weatherCityName{
+    font-size: $WeatherCityFont
+}
+
+@keyframes ani {
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+
+
