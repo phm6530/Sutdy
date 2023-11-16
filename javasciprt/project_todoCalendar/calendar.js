@@ -28,7 +28,8 @@ const TodayDate = new Date();
 const fixedYear = TodayDate.getFullYear();
 const fixedMonth = TodayDate.getMonth() + 1;
 const fixedDay = TodayDate.getDate();
-const thisMonth = fixedYear.get + '' + fixedMonth;
+const thisMonth = fixedYear + '' + fixedMonth;
+
 
 //선택 날짜
 const date = new Date();

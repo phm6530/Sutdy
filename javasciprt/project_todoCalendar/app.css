@@ -556,10 +556,6 @@ input[type=checkbox] {
   }
 }
 
-.card-wrap:hover .card-info {
-  transform: translateY(0);
-}
-
 .card-wrap:hover .card-info p {
   opacity: 1;
 }
@@ -590,7 +586,7 @@ input[type=checkbox] {
   flex: 0 0 240px;
   width: 240px;
   height: 320px;
-  background-color: #333;
+  background-color: #000;
   overflow: hidden;
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.66) 0 30px 60px 0, inset #333 0 0 0 5px, inset rgba(255, 255, 255, 0.5) 0 0 0 6px;
@@ -598,7 +594,7 @@ input[type=checkbox] {
 }
 
 .card-bg {
-  opacity: 0.5;
+  opacity: 0.7;
   position: absolute;
   top: -20px;
   left: -20px;
@@ -608,11 +604,12 @@ input[type=checkbox] {
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-  transition: 1s cubic-bezier(0.445, 0.05, 0.55, 0.95), opacity 5s 1s cubic-bezier(0.445, 0.05, 0.55, 0.95);
+  transition: 1s cubic-bezier(0.445, 0.05, 0.55, 0.95), opacity 2s 1s cubic-bezier(0.445, 0.05, 0.55, 0.95);
   pointer-events: none;
 }
 
 .card-info {
+  width: 100%;
   padding: 20px;
   position: absolute;
   bottom: 0;
@@ -655,4 +652,8 @@ input[type=checkbox] {
 .loadingDiv {
   width: 100%;
   height: 100%;
+}
+
+.swiper-container {
+  overflow: hidden;
 }/*# sourceMappingURL=app.css.map */

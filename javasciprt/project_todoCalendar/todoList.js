@@ -329,6 +329,7 @@
 
             const dayKeys = Object.keys(todoArr[`${ViewYear}${ViewMonth}`]);
             const dayIdx = dayKeys.filter((e) => todoArr[`${ViewYear}${ViewMonth}`][e].length !== 0);
+            // console.log(dayKeys);
 
             const keyArr = {}; // 엎어칠 빈 객체 생성
             dayIdx.forEach(idx => {

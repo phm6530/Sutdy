@@ -7,32 +7,22 @@
     <link rel="stylesheet" href="./reset.css">
     <link rel="stylesheet" href="./app.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <style>
-        .swiper-container{
-            overflow: hidden;
-        }
-    </style>
 </head>
 <body>
-    <header id="header"></header>
-    <div class="container">
     
-       
-        
+    <header id="header"></header>
+    
+    <div class="container">
       
         <div class="timer"></div>
         <div id="waether">
             <div class="card-wrap" onmousemove="tilt(event)" onmouseleave="resetTilt(this)">
-                <div class="card">
-                  <div class="card-bg" style="background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/61488/taphouse.jpg')"></div>
-                  <div class="card-info">
-                    <h1>Clean</h1>
-                    <p>60 Ranelagh Village, Dublin</p>
-                  </div>
-                </div>
-              </div>
-        <div class="swiper-container"></div></div>
-        
+                <div class="card"></div>
+            </div>
+
+            <div class="swiper-container"></div>
+        </div>
+
         <div class="wrap">
             <!-- 캘린더 -->
             <div id="myCalendar" class="myCalendar"></div>
@@ -59,27 +49,65 @@
 <link rel="stylesheet" href="./lib/swiper-bundle.css" />
 <script>
 
+const createDiv3 = (what, Name) => {
+    const div = document.createElement('div');
+    what === 1
+        ? div.classList.add(Name)
+        : div.setAttribute('id', Name);
+    return div;
+}
+
+const weatherIcon = (key) => {
+    return `<img src="img/${key}.png" alt="${key}">`
+};
+
+
+
+
+function addCard(city ,firstData){
+    const card = document.querySelector('.card');
+    const cardBg = createAndAppend(card, 'div', '', 'card-bg');
+    const cardInfo = createAndAppend(cardBg, 'div', '', 'card-info');
+    const h1 = createAndAppend(cardInfo, 'h1', '', '');
+    const p = createAndAppend(cardInfo, 'p', '', '');
+    const iconArea = createAndAppend(cardInfo, 'p', '', '');
+    const icon = firstData.weather[0].main;
+
+    iconArea.innerHTML = weatherIcon(icon);
     
+    h1.textContent = `${Math.round(firstData.main.temp - 273.15)}`; 
+    h1.innerHTML += '<span>°C</span>';//귀찮아..
+    p.textContent = city;
+    // p.textContent = 
+    console.log('받은 데이터 :', firstData);
+    console.log(thisMonth);
+    console.log(textDays);
+
+    
+    cardBg.style.backgroundImage = 'url(./img/weather/november.jpg)';
+    
+    card.appendChild(cardInfo);
+}
 
 
 
-function tilt(event) {
-      var card = event.currentTarget.querySelector('.card');
-      var cardInfo = event.currentTarget.querySelector('.card-info');
-      var cardBg = event.currentTarget.querySelector('.card-bg');
-      var bodyWidth = document.body.clientWidth;
-      var bodyHeight = document.body.clientHeight;
-      
 
-      var sxPos = ((event.pageX / bodyWidth) * 100 - 50) * 10;
-      console.log(sxPos);
-      var syPos = ((event.pageY / bodyHeight) * 100 - 50) * 5;
-      console.log(syPos);
+    function tilt(event) {
+        var card = document.querySelector('.card');
+        var cardInfo = document.querySelector('.card-info');
+        var cardBg = document.querySelector('.card-bg');
+        var bodyWidth = document.body.clientWidth;
+        var bodyHeight = document.body.clientHeight;
 
-      setTransform(card, -0.03 * sxPos, 0.03 * syPos );
-      setTransform(cardInfo, -0.03 * sxPos, 0.03 * syPos );
-      setTransform(cardBg, -0.03 * sxPos, 0.03 * syPos );
-    }
+        var sxPos = ((event.pageX / bodyWidth) * 100 - 50) * 10;
+        //   console.log(sxPos);
+        var syPos = ((event.pageY / bodyHeight) * 100 - 50) * 5;
+        //   console.log(syPos);
+
+        setTransform(card, -0.03 * sxPos, 0.03 * syPos );
+        setTransform(cardInfo, -0.03 * sxPos, 0.03 * syPos );
+        setTransform(cardBg, -0.03 * sxPos, 0.03 * syPos );
+    }   
 
     function resetTilt(element) {
       var card = element.querySelector('.card');
@@ -92,16 +120,6 @@ function tilt(event) {
     }
 
 
-const createDiv3 = (what, Name) => {
-    const div = document.createElement('div');
-    what === 1
-        ? div.classList.add(Name)
-        : div.setAttribute('id', Name);
-    return div;
-}
-const weatherIcon = (key) => {
-    return `<img src="img/${key}.png" alt="${key}">`
-};
 
 
 // 타이머
@@ -144,21 +162,51 @@ appendClock(initalText);
 
 
 
-console.log(thisClick());
+// console.log(thisClick());
 
 function swiperHandler(city, weatherData){
     const targetSwiper =  document.querySelector('.swiper-container');
     const swiperWrapper = createDiv3(1,'swiper-wrapper');
 
-    
     const today = new Date().toISOString().split('T')[0]; //오늘 날짜 포멧팅
+    
+    // const todayThistime = new Date().getHours() * 60   + new Date().getMinutes() ;
+    const todayThistime = new Date().getHours();
+    // console.log(todayThistime);
+    
+    // console.log(todayThistime);
     // console.log(today);
-    console.log(weatherData);
-    console.log(weatherData[0].dt_txt.split(' ')[0] === today);
+    // console.log(weatherData[0].dt_txt.split(' ')[0] === today);
+
     const todayArr = weatherData.filter((e)=>{
         return e.dt_txt.split(' ')[0] === today;
     });
+    // console.log(todayTime);
+    console.log(todayThistime);
+    
+    const CardData = [];
+    todayArr.forEach((arr, idx)=>{
+        const hours = arr.dt_txt.split(" ")[1].slice(0,2);
+        if(CardData.length === 0 ||  hours < todayThistime){
+            CardData.push(arr);
+        }
+        console.log(arr);
+    });
+    
+    addCard(city, CardData[CardData.length - 1]);
 
+    // 가까운시간 가져오기..
+    // let testArr = {};
+    // todayArr.forEach((e)=>{
+    //     const thisday = e.dt_txt;
+    //     const weatherTime = new Date(thisday).getHours() * 60 + new Date(thisday).getMinutes();
+    //     const timeddd = Math.abs(weatherTime - todayThistime);
+        
+    //     if(Object.keys(testArr).length === 0 || timeddd < testArr.timeddd ){
+    //             testArr = { array : e , timeddd : timeddd };
+    //     }
+    // });
+    // console.log(testArr.array);
     
     
     // const firstSlide = createDiv3(1,'swiper-slide');
@@ -238,8 +286,9 @@ function swiperHandler(city, weatherData){
     // search : 7,
     // snow : 8,
     // wind : 9
-  
-const apiURI = 'http://api.openweathermap.org/data/2.5/forecast?q=seoul&cnt=21&appid=4ff4e9b9bb000db3b5905140478fd229';
+
+
+
 const test = document.getElementById('waether');
 
 const loadingText = createDiv(1, 'loading');
@@ -248,38 +297,46 @@ loadingText.textContent = 'Loading...';
 test.appendChild(loadingText);
 
 
-const fetchData = async () =>{
-fetch(apiURI)
-    .then(response => {
-        if (response.ok) {
-            return response.json();
-        } else {
-            throw new Error('에러 났네');
-        }
-    })
-    .then(data => {
-        // console.log(data);
-        const cityName = data.city.name;
-        const currentDateTime = new Date().getDate();
-        const weatherResponse = data.list.filter(entry => {
-            // API에서 받아온 시간 문자열을 Date 객체로 변환
-            const forecastDateTime = new Date(entry.dt_txt).toISOString().split('T')[0].slice(-2);
-            // console.log(forecastDateTime);
-            return Number(forecastDateTime) >= currentDateTime; 
-            
+// 위치 정보 받기
+navigator.geolocation.getCurrentPosition(async (position) => {
+    const { latitude, longitude } = position.coords;
+    const apiKey = '4ff4e9b9bb000db3b5905140478fd229';
+    const apiURI = `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${apiKey}`;            
+
+    const fetchData = async () =>{
+    fetch(apiURI)
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('에러 났네');
+            }
+        })
+        .then(data => {
+            // console.log(data);
+            const cityName = data.city.name;
+            const currentDateTime = new Date().getDate();
+            const weatherResponse = data.list.filter(entry => {
+                // API에서 받아온 시간 문자열을 Date 객체로 변환
+                const forecastDateTime = new Date(entry.dt_txt).toISOString().split('T')[0].slice(-2);
+                // console.log(forecastDateTime);
+                return Number(forecastDateTime) >= currentDateTime; 
+                
+            });
+            const text = createDiv3(1, 'weatherWrap');
+            test.removeChild(loadingText);
+            test.appendChild(text);
+            // console.log(data);
+            swiperHandler(data.city.name, weatherResponse);
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+            loadingText.textContent = error;
         });
-        const text = createDiv3(1, 'weatherWrap');
-        // test.removeChild(loadingText);
-        test.appendChild(text);
-        // console.log(data);
-        swiperHandler(data.city.name, weatherResponse);
-    })
-    .catch(error => {
-        console.error('Error fetching data:', error);
-        loadingText.textContent = error;
-    });
-}
-fetchData();
+    }
+    fetchData();
+});
+
 // 여기서는 weatherPromise가 Promise 객체이므로, then()이나 catch()를 사용할 수 있습니다.
 
 </script>
