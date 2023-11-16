@@ -342,6 +342,7 @@
             // console.log('old 월 : ', monthKeys);
             // monthKeys 배열을 순회하면서 빈 배열이 아닌 경우에만 새로운 객체에 추가
             monthKeys.forEach((idx) => {
+                // console.log(idx);
                 if (Object.keys(todoArr[idx]).length !== 0) {
                     monthKeyArr[idx] = todoArr[idx];
                 }

@@ -5,7 +5,8 @@
   "license": "MIT",
   "dependencies": {
     "node-sass": "^9.0.0",
-    "sass": "^1.69.5"
+    "sass": "^1.69.5",
+    "swiper": "^11.0.4"
   },
   "scripts": {
     "scss": "sass app.scss app.css"
