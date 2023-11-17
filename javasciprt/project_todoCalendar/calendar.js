@@ -1,15 +1,6 @@
 
 // Div 동적생성
-const calendarElement = document.getElementById('myCalendar');
-
-const createAndAppend = (parent, elementType, textContent = '', className = '') => {
-    const element = document.createElement(elementType);
-    element.textContent = textContent;
-    element.className = className;
-    parent.appendChild(element);
-    return element;
-};
-  
+const calendarElement = document.getElementById('myCalendar'); 
 const navDiv = createAndAppend(calendarElement, 'div', '', 'calendar-nav');
 const calendarDiv = createAndAppend(calendarElement, 'div', '', 'calendar');
 const todayDate = createAndAppend(navDiv, 'div' , '', 'calendar-month');
@@ -21,8 +12,9 @@ const StateTable = createAndAppend(thisMonthStatus, 'div', 'Status Table', 'stat
 StateTable.addEventListener('click', () => renderNotThisMonth(ViewYear ,ViewMonth , ViewDay));
 
 // 날짜 배열로 ..
-const textDays = ['Sun','Mon','Tue','Wen','Thu','fri','Sat'];
-const textMonth = ['January','February','March','April','May','june','july','August','September','October','November','December'];
+
+
+
 
 const TodayDate = new Date();
 const fixedYear = TodayDate.getFullYear();

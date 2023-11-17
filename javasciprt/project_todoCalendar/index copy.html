@@ -73,7 +73,7 @@ function addCard(country , city ,firstData , allData){
         const formatHour = (hour.charAt(0) === '0') ? hour.charAt(1) + '시' : hour + '시';
         allDataHTML += '<div class="cardDatalist">';
         allDataHTML += `<img class='weather_list_icon' src='./${weatherIcon(e.weather[0].main)}'alt='${e.weather[0].main}' >`;
-        allDataHTML += `<span>${formatHour}</span>`;
+        allDataHTML += `${formatHour}`;
         allDataHTML += `<div class='math'>${Math.round(e.main.temp - 273.15)} <span>°C</span></div>`;
         // allDataHTML += e.weather[0].main + '메인';
         // allDataHTML += e.main.humidity + '습도';
@@ -91,7 +91,7 @@ function addCard(country , city ,firstData , allData){
     html += `<div class='card_day'>${fullTextDays[day]}</div>`
     html += `<div class='card_date'>${cardDate[2]} <span>${textMonth[cardDate[1] - 1].slice(0,3)}</span> ${cardDate[0]}</div>`;
 
-    console.log(firstData);
+ 
     
     const iconArea = createAndAppend(cardInfo, 'p', '', 'iconArea');
     const todayMatch = createAndAppend(cardInfo, 'div','' ,'todayMatch')
@@ -120,6 +120,7 @@ function swiperHandler(country, city, weatherData){
     const currentDate = new Date();
     const koreaTime = new Date(currentDate.getTime() + (9 * 60 * 60 * 1000));
     const today = koreaTime.toISOString().split('T')[0];
+    
     // const todayThistime = new Date().getHours() * 60   + new Date().getMinutes() ;
     const todayThistime = new Date().getHours();
     // console.log(todayThistime);
@@ -129,7 +130,6 @@ function swiperHandler(country, city, weatherData){
     // console.log(weatherData[0].dt_txt.split(' ')[0] === today);
 
     const todayArr = weatherData.filter((e)=>{
-        console.log(e.dt_txt.split(' ')[0] === today);
         return e.dt_txt.split(' ')[0] === today;
     });
     // console.log(todayTime);
@@ -137,17 +137,13 @@ function swiperHandler(country, city, weatherData){
     
     const CardData = [];
     todayArr.forEach((arr, idx)=>{
-        const times = arr.dt_txt.split(" ")[1].slice(0,2);
-        const hours = (times.charAt(0) === '0') ? parseInt(times.charAt(1)) : parseInt(times);
-        console.log('시간 :',hours);
-        console.log('지금시간 : ',todayThistime);
-        if(CardData.length === 0 ||  hours <= todayThistime){
+        const hours = arr.dt_txt.split(" ")[1].slice(0,2);
+        if(CardData.length === 0 ||  hours < todayThistime){
             CardData.push(arr);
         }
         // console.log(arr);
     });
-    console.log(CardData);
-    // console.log(cardDat);
+    console.log(todayArr);
     addCard(country , city, CardData[CardData.length - 1] ,todayArr);
 
     // 가까운시간 가져오기..

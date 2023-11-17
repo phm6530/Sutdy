@@ -543,7 +543,7 @@ input[type=checkbox] {
   cursor: pointer;
   position: relative;
   transition: 1s cubic-bezier(0.445, 0.05, 0.55, 0.95);
-  animation: transX 0.5s ease;
+  animation: transX 1s ease;
 }
 @keyframes transX {
   0% {
@@ -566,7 +566,7 @@ input[type=checkbox] {
 }
 
 .card-wrap:hover .card-info:after {
-  transition: 5s cubic-bezier(0.23, 1, 0.32, 1);
+  transition: 1s cubic-bezier(0.23, 1, 0.32, 1);
   opacity: 1;
   transform: translateY(0);
 }
@@ -584,7 +584,7 @@ input[type=checkbox] {
 .card {
   position: relative;
   flex: 0 0 240px;
-  width: 240px;
+  width: 600px;
   height: 320px;
   background-color: #000;
   overflow: hidden;
@@ -592,15 +592,25 @@ input[type=checkbox] {
   box-shadow: rgba(0, 0, 0, 0.66) 0 30px 60px 0, inset #333 0 0 0 5px, inset rgba(255, 255, 255, 0.5) 0 0 0 6px;
   transition: 1s cubic-bezier(0.445, 0.05, 0.55, 0.95);
 }
+.card .weather_icon {
+  width: 80px;
+  /* margin-top: 20px; */
+  margin-right: 25px;
+  filter: drop-shadow(2px 4px 6px black);
+}
+
+.todayMatch {
+  display: flex;
+  align-items: center;
+}
 
 .card-bg {
   opacity: 0.7;
   position: absolute;
-  top: -20px;
-  left: -20px;
+  top: 0px;
+  left: 0px;
   width: 100%;
   height: 100%;
-  padding: 20px;
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -608,13 +618,97 @@ input[type=checkbox] {
   pointer-events: none;
 }
 
-.card-info {
-  width: 100%;
-  padding: 20px;
+.cardAlldata {
+  /* width: calc(60% - 40px); */
+  padding: 0;
   position: absolute;
+  padding: 30px 0 0 0;
+  width: 100%;
+  text-align: center;
   bottom: 0;
+  /* border-right: 1px solid rgba(255, 255, 255, 0.21); */
+  /* width: 50%; */
+  display: flex;
   color: #fff;
+  top: 0;
+  right: 0;
   transition: 0.6s 1.6s cubic-bezier(0.215, 0.61, 0.355, 1);
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  text-align: center;
+}
+.cardAlldata .weather_list_icon {
+  width: 30px;
+}
+
+.datalist {
+  display: flex;
+  width: 100%;
+}
+
+.cardDatalist {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  /* border-bottom: 1px dotted rgba(255, 255, 255, 0.2); */
+  padding: 10px 0;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 0.5em;
+  /* width: 50px; */
+  margin-right: 10px;
+  height: 74px;
+}
+.cardDatalist span {
+  opacity: 0.5;
+  font-size: 12px;
+}
+.cardDatalist .math {
+  margin-top: auto;
+}
+.cardDatalist .math span {
+  font-size: 0.5rem;
+}
+
+.card-info {
+  /* width: calc(40% - 40px); */
+  padding: 20px;
+  /* position: absolute; */
+  bottom: 0;
+  /* border-right: 1px solid rgba(255, 255, 255, 0.21); */
+  /* width: 50%; */
+  display: flex;
+  color: #fff;
+  height: calc(100% - 40px);
+  top: 0;
+  transition: 0.6s 1.6s cubic-bezier(0.215, 0.61, 0.355, 1);
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+}
+.card-info .card_day {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+.card-info .card_date {
+  opacity: 0.6;
+  margin-bottom: 5px;
+}
+
+.temp-align {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.temp-align span:first-child {
+  font-size: 40px;
+  letter-spacing: -5px;
+}
+.temp-align span:last-child {
+  opacity: 0.5;
 }
 
 .card-info p {
@@ -639,7 +733,7 @@ input[type=checkbox] {
   background-blend-mode: overlay;
   opacity: 11;
   transform: translateY(100%);
-  transition: 5s 1s cubic-bezier(0.445, 0.05, 0.55, 0.95);
+  transition: 1s cubic-bezier(0.445, 0.05, 0.55, 0.95);
 }
 
 .card-info h1 {
@@ -656,4 +750,10 @@ input[type=checkbox] {
 
 .swiper-container {
   overflow: hidden;
+}
+
+.footer {
+  width: 100%;
+  margin-top: 50px;
+  height: 100px;
 }/*# sourceMappingURL=app.css.map */

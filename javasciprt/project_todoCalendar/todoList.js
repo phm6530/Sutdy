@@ -61,42 +61,7 @@
         3: '일정을 입력해주세요!'
     }
 
-    // btn id 반영
-    const idClassButton = (id) => {
-        const btn = document.createElement('button');
-        btn.setAttribute('id', id);
-        btn.setAttribute('type', 'submit');
-        return btn;
-    }
-
-    // onClick 이벤트 반영 리턴
-    const createButton = (event) => {
-        const btn = document.createElement('button');
-        btn.setAttribute('onClick', event);
-        return btn;
-    }
-
-    // div 생성 및 class name 반영 리턴
-    const createDiv = (e) => {
-        const div = document.createElement('div');
-        div.classList.add(e);
-        return div;
-    }
-
-    // input 타입생성
-    const creatInput = (id, type) =>{
-        const input = document.createElement('input');
-        input.setAttribute('id' , id);
-        input.setAttribute( 'type' , type);
-        return input;
-    }
-
-    // span 생성
-    const creatSpan = (className) =>{
-        const input = document.createElement('span');
-        input.classList.add(className);
-        return input;
-    }
+ 
     
     const createForm = () => {
         const addForm = document.createElement('form');
