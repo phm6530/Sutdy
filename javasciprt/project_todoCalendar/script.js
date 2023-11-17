@@ -1,6 +1,6 @@
 
 const fullTextDays = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-const textDays = ['Sun','Mon','Tue','Wen','Thu','fri','Sat'];
+const textDays = ['Sun','Mon','Tue','Wen','Thu','Fri','Sat'];
 const textMonth = ['January','February','March','April','May','june','july','August','September','October','November','December'];
 // div 생성
 const createAndAppend = (parent, elementType, textContent = '', className = '') => {
@@ -21,9 +21,10 @@ const createDiv3 = (what, Name) => {
 }
 
    // btn id 반영
-   const idClassButton = (id) => {
+const idClassButton = (id) => {
     const btn = document.createElement('button');
     btn.setAttribute('id', id);
+    btn.classList.add('btn-styleType2')
     btn.setAttribute('type', 'submit');
     return btn;
 }

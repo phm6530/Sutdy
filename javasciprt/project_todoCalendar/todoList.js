@@ -128,7 +128,8 @@
         const div = createDiv('todoList');
         const divInfo = createDiv('todoInfo');
         const btnDelete = createButton(`delArr( ${element.key} , event)`);
-        btnDelete.classList.add('deleteIcon' , 'centerIcon');
+        
+        btnDelete.classList.add('deleteIcon' , 'centerIcon' , 'btn-styleType1');
         div.setAttribute('onclick', `chkList(${element.key})`);
 
         

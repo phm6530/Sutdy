@@ -57,6 +57,8 @@ const cusMonth = (item) => {
     
 }
 
+btnPrev.classList.add('btn-styleType1');
+btnNext.classList.add('btn-styleType1');
 //prev, next 버튼
 btnPrev.addEventListener('click', () => cusMonth('prev'));
 btnNext.addEventListener('click', () => cusMonth('next'));
