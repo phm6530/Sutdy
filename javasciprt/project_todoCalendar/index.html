@@ -77,6 +77,7 @@ function addCard(country , city ,firstData , allData){
     cardWrap.appendChild(card);
 }
 
+// slide 생성
 function addSlider(arr){
     let firstHTML = '';
     arr.forEach((e)=>{
@@ -103,16 +104,19 @@ function btnWeatherday(days){
     days.forEach((e,idx) => {
         const textday = new Date(e).getDay();
         const btnDiv = document.createElement('div');
+
         btnDiv.setAttribute('data-set', idx);
         idx === 0 ? btnDiv.classList.add('WeatherBtn' , 'active') : btnDiv.classList.add('WeatherBtn');
+
         btnDiv.textContent = textDays[textday];
         btnArea.appendChild(btnDiv);
     });
 }
  
-function swiperHandler(country, city, weatherData , resultKeys){
+function swiperHandler(country, city, setArr , resultKeys){
     const targetSwiper =  document.querySelector('.swiper-container');
     const swiperWrapper = createDiv3(1,'swiper-wrapper');
+    const weatherData = setArr.weatherData;
     
     const currentDate = new Date();
     const koreaTime = new Date(currentDate.getTime() + (9 * 60 * 60 * 1000));
@@ -132,6 +136,7 @@ function swiperHandler(country, city, weatherData , resultKeys){
         }
         // console.log(arr);
     });
+    console.log(CardData);
 
     // 오늘데이터만 넘기는 카드 생성 또고쳐야할듯
     
@@ -162,9 +167,9 @@ function swiperHandler(country, city, weatherData , resultKeys){
     });
 
     // btnClick 함수에 mySwiper를 전달하여 사용할 수 있도록 함
-    
-    btnClick(resultKeys, mySwiper);
     addCard( country , city, CardData[CardData.length - 1] ,weatherData);
+    const e = 'ggg';
+    btnClick(CardData, mySwiper , setArr);
 }
 
 
@@ -176,7 +181,8 @@ loadingText.classList.add('loadingDiv');
 loadingText.textContent = 'Loading...';
 test.appendChild(loadingText);
 
-function btnClick(data, swiper) {
+function btnClick(CardData, swiper, data) {
+  
     const target = document.querySelectorAll('.WeatherBtn');
     target.forEach((e) => {
         e.addEventListener('click', () => {
@@ -184,7 +190,8 @@ function btnClick(data, swiper) {
             e.classList.add('active');
             const idx = e.getAttribute(['data-set']);
             swiper.slideTo(idx);
-            // addCard( country , city, CardData[CardData.length - 1] ,weatherData);
+                console.log(data);
+            addCard( data.country , data.city, CardData[CardData.length - 1] , data.weatherData);
         });
     });
 }
@@ -212,32 +219,29 @@ navigator.geolocation.getCurrentPosition(async (position) => {
             test.appendChild(text);
 
             // 일별 객체배열 생성
-            // const resultArr = (arr)=>{
-            //     const weatherArr = {city: arr.city.country , country : arr.city.name};
-            //     console.log(arr.list);
-            //     // console.log(arr.key);
-            //     arr.list.forEach((e)=>{
-            //         const date = e.dt_txt.split(" ")[0];
-            //         if(!weatherArr[date]){
-            //             weatherArr[date] = [];
-            //         }
-            //         weatherArr[date].push(e);
-            //     });
-            //     console.log(weatherArr);
+            const resultArr = ()=>{
+                const weatherArr = {city: data.city.country , country : data.city.name , weatherData : []};
+                data.list.forEach((e)=>{
+                    const date = e.dt_txt.split(" ")[0];
+                    if(!weatherArr.weatherData[date]){
+                        weatherArr.weatherData[date] = [];
+                    }
+                    weatherArr.weatherData[date].push(e);
+                });
+                // console.log(weatherArr.weatherData);
      
-            //     return weatherArr;
-            // }
-            // console.log(resultArr(data));
-           const resultArr = data.list.reduce((arr , val) =>{
-                    const data =  val.dt_txt.split(" ")[0];
-                    arr[data] = arr[data] || [];
-                    arr[data].push(val);
-                    return arr
-            },{});
+                return weatherArr;
+            }
+        //    const resultArr = data.list.reduce((arr , val) =>{
+        //             const data =  val.dt_txt.split(" ")[0];
+        //             arr[data] = arr[data] || [];
+        //             arr[data].push(val);
+        //             return arr
+        //     },{});
             // 일 생성
-            const resultKeys = Object.keys(resultArr);
+            const resultKeys = Object.keys(resultArr().weatherData);
             btnWeatherday(resultKeys);
-            swiperHandler(country , cityName , resultArr , resultKeys );
+            swiperHandler(country , cityName , resultArr() , resultKeys );
             // addCard( country , cityName , CardData[CardData.length - 1] ,weatherData);
         })
         .catch(error => {
