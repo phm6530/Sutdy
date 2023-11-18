@@ -45,3 +45,8 @@ Ignore node_modules directory
 
 Ignore yarn lock file
 /yarn.lock
+
+# mysql install
+1. mysql -u 아이디 -p패스워드
+2. mysql --version 
+3. 환경변수 잘확인하기
