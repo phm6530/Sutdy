@@ -231,7 +231,7 @@ body{
     width: calc(100% - 40px);
 }
 .swiper-wrapper{
-    width: 50%;
+    // width: 50%;
 }
 .swiperContents{
     width: calc(100% - 20px);
@@ -347,15 +347,15 @@ table{
     max-height: 464px;
 
     .todoList {
-        margin: 20px 1px 20px 5px;
+        margin: 0px 1px 20px 5px;
         border-radius: 1rem;
         padding: 14px;
-        box-shadow: -4px -4px 15px rgba(255, 255, 255, .7), 4px 4px 15px rgba(36, 36, 36, .15);
+        box-shadow: -4px -4px 15px rgba(255, 255, 255, 0.7), 4px 4px 15px rgba(36, 36, 36, 0.15);
         min-height: 30px;
         border-bottom: 1px dotted rgba(0, 0, 0, 0.1);
         font-size: 14px;
         font-family: var(--title-font);
-        animation: fadeUp .3s ease;
+        animation: fadeUp 0.3s ease;
         position: relative;
     }
     .infoClass{
@@ -671,21 +671,17 @@ $WeatherCityFont : 20px;
 }
 
 .swiper-slide{
-    display: inline-flex !important;
     align-items: center;
     /* padding: 0px 0px 0px 20px; */
-    height: 73px;
-    padding: 10px 16px;
-    width: auto !important;
     text-align: center;
-    box-shadow: 3px 1px 37px rgba(255, 255, 255, 0.8), 9px -3px 36px rgba(48, 59, 73, 0.24), inset -4px -4px 10px rgba(255, 255, 255, 0.8), inset 4px 4px 10px rgba(34, 48, 65, 0.1);
+    box-shadow: 3px 1px 17px rgba(255, 255, 255, 0.8), 1px -1px 4px rgba(48, 59, 73, 0.24), inset -4px -2px 11px rgba(255, 255, 255, 0.8), inset 4px 4px 10px rgba(34, 48, 65, 0.1);
     border-radius: 0.5em;
     flex-direction: column;
     font-size: 12px;
+    display: flex !important;
     /* border: 1px solid; */
-    margin: 3px;
     /* border: 1px solid rgba(0, 0, 0, 0.1); */
-    justify-content: flex-end;
+    justify-content: center;
     img{
         width: 25px;
         margin-bottom: 12px;
@@ -693,15 +689,25 @@ $WeatherCityFont : 20px;
         filter: drop-shadow(2px 2px 2px #3c4a5e);
     }
 }
+.swiper-slide{
+    position: relative;
+    &::after{
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: -13px;
+        height: 10px;
+        width: 1px;
+        // border: 1px solid #fff;
+        // background-color: #3c4961;
+    }
+}
+
 
 // .swiper-wrapper .swiper-slide:not(.swiper-slide-active){
 //     opacity: 0 !important;
 // }
 
-.swiper-wrapper{
-    width: 100%;
-    padding-left: 20px !important;
-}
 
 
 // .slide-wrap{
@@ -731,6 +737,7 @@ $WeatherCityFont : 20px;
     line-height: 1.4em;
     flex-direction: column;
     font-size: 14px;
+    padding-left: 20px;
 }
 
 // card
@@ -966,15 +973,45 @@ $WeatherCityFont : 20px;
   }
 
   .swiper-container{
+    // background-color: red;
+    // display: none !important;
+    // width: 50% !important;
+    
+    }
+.dashBoard{
+    display: flex;
+    flex-direction: column;
+    width: calc(100% - 322px);
+}
+.firstTime{
+    position: absolute;
+    top: -13px;
+    width: 100%;
+    border-radius: 5px 5px 0 0;
+    font-weight: bold;
+    filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.5));
+    padding: 3px 0;
+    color: #fff;
+    left: 51%;
+    transform: translate(-50%);
+}
+
+
+  .swiper-container{
     overflow: hidden;
     display: flex;
     width: 100%;
     flex-direction: row;
+    padding-top: 45px;
+    padding-bottom: 25px;
+    height: 100px;
     flex-wrap: wrap;
     align-content: flex-start;
-    box-shadow: 3px 1px 37px rgba(255, 255, 255, 0.8), 9px -3px 36px rgba(48, 59, 73, 0.24), inset -4px -4px 10px rgba(255, 255, 255, 0.8), inset 4px 4px 10px rgba(34, 48, 65, 0.1);
-    border-radius: 1em;
+    /* box-shadow: 3px 1px 37px rgba(255, 255, 255, 0.8), 9px -3px 36px rgba(48, 59, 73, 0.24), inset -4px -4px 10px rgba(255, 255, 255, 0.8), inset 4px 4px 10px rgba(34, 48, 65, 0.1); */
+    /* border-radius: 1em; */
+    margin-left: 20px;
 }
+
 
 
 

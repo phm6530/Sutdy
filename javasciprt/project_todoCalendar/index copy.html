@@ -187,22 +187,22 @@ function swiperHandler(country, city, weatherData){
     // console.log(todayWether);
 
         
-    const slide = createDiv3(1,'swiper-slide');
-    weatherData.forEach(e => {
+    // const slide = createDiv3(1,'swiper-slide');
+    // weatherData.forEach(e => {
            
-            let HTML = '';
-            HTML += weatherIcon(e.weather[0].main);
-            HTML += e.dt_txt + '/';
-            HTML += Math.round(e.main.temp - 273.15)+ '온도';
-            HTML += e.weather[0].main + '메인<br>';
-            HTML += e.main.humidity + '습도';
-            HTML += e.weather[0].main, '날씨 메인';
-            HTML += e.weather[0].description, '하늘 맑은지 보는거';
-            HTML += e.weather[0].icon, '딱히 안쓸듯';
-            HTML += e.wind.speed, '풍속';
-            slide.innerHTML += HTML;
+    //         let HTML = '';
+    //         HTML += weatherIcon(e.weather[0].main);
+    //         HTML += e.dt_txt + '/';
+    //         HTML += Math.round(e.main.temp - 273.15)+ '온도';
+    //         HTML += e.weather[0].main + '메인<br>';
+    //         HTML += e.main.humidity + '습도';
+    //         HTML += e.weather[0].main, '날씨 메인';
+    //         HTML += e.weather[0].description, '하늘 맑은지 보는거';
+    //         HTML += e.weather[0].icon, '딱히 안쓸듯';
+    //         HTML += e.wind.speed, '풍속';
+    //         slide.innerHTML += HTML;
            
-    });
+    // });
     // swiperWrapper.appendChild(slide);
     targetSwiper.appendChild(swiperWrapper);
     const mySwiper = new Swiper('.swiper-container', {

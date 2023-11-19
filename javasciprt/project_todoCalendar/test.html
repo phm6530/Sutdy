@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>코드 스니펫 생성기</title>
+</head>
+<body>
+
+<input type="text" id="userInput" placeholder="어떤 기능을 구현하고 싶으세요?">
+<button onclick="generateCode()">코드 생성</button>
+<pre id="codeSnippet"></pre>
+
+<script>
+function generateCode() {
+  var userInput = document.getElementById('userInput').value;
+  var code = "";
+
+  // 예시: '버튼'이라는 단어가 입력에 포함되면 버튼을 만드는 코드 생성
+  if (userInput.toLowerCase().includes('버튼')) {
+    code = "const button = document.createElement('button');\n";
+    code += "button.innerHTML = 'Click me';\n";
+    code += "document.body.appendChild(button);";
+  } else {
+    code = "// 해당 기능에 대한 코드를 생성할 수 없습니다.";
+  }
+
+  document.getElementById('codeSnippet').textContent = code;
+}
+</script>
+
+</body>
+</html>
