@@ -1,39 +1,31 @@
-var body = document.body;
-var panel = document.getElementById('panel');
-var pContent = document.getElementById('pContent');
-var imgCol = document.getElementById('imgCol');
+const apiURI = `https://api.openweathermap.org/data/2.5/forecast?lat=37.552128&lon=127.2020992&appid=4ff4e9b9bb000db3b5905140478fd229`;
 
-function initTilt() {
-  setTransformStyle([pContent, imgCol], "preserve-3d");
+const fetchData = async () => {
+    try {
+        const response = await fetch(apiURI);
 
-  body.addEventListener('mousemove', function(e) {
-    tilt(e.pageX, e.pageY);
-  });
-}
+        if (!response.ok) {
+            throw new Error('에러 났네');
+        }
+        const data = await response.json();
+        // const epochTime = data.list[0].dt;
+        console.log(new Date().toLocaleString('ko-KR').getDate());
 
-function tilt(cx, cy) {
-  var sxPos = (cx / body.clientWidth * 100 - 50) * 2;
-  var syPos = (cy / body.clientHeight * 100 - 50) * 2;
+        // data.list.forEach((e)=>{
+        //     const koreaTime = new Date(e.dt * 1000).toLocaleString('ko-KR');
+        //     console.log(koreaTime);
+            
+        // });
+        
+        // console.log('날씨 데이터 시간:', koreaTime);
+        // console.log('현재 시간:', new Date().toLocaleString('ko-KR'));
 
-  setTransform(pContent, -0.03 * sxPos, 0.03 * syPos, "center center -400");
-  setTransform(imgCol, -0.03 * sxPos, 0.03 * syPos, "center center -200");
-}
 
-function setTransform(element, rotationY, rotationX, transformOrigin) {
-  element.style.transform = `rotateY(${rotationY}deg) rotateX(${rotationX}deg)`;
-  element.style.transformOrigin = transformOrigin;
-}
 
-function setTransformStyle(elements, transformStyle) {
-  elements.forEach(function(element) {
-    element.style.transformStyle = transformStyle;
-  });
-}
 
-body.addEventListener('mouseleave', function() {
-  tilt(body.clientWidth / 2, body.clientHeight / 2);
-});
+    } catch (error) {
+        console.error('데이터를 가져오는 중 에러 발생:', error);
+    }
+};
 
-initTilt();
-
-console.clear();
+fetchData();

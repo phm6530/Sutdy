@@ -48,11 +48,17 @@
 }
 .swiper-wrapper {
   position: relative;
-  width: 100%;
   z-index: 1;
   display: flex;
   transition-property: transform;
   transition-timing-function: var(--swiper-wrapper-transition-timing-function, initial);
+  box-sizing: content-box;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  display: flex;
+  transition-property: transform;
   box-sizing: content-box;
 }
 .swiper-android .swiper-slide,
@@ -69,7 +75,7 @@
 .swiper-slide {
   flex-shrink: 0;
   width: 100%;
-  height: 100%;
+  /* height: 100%; */
   position: relative;
   transition-property: transform;
   display: block;
@@ -330,27 +336,7 @@
   content: 'next';
 }
 /* Navigation font end */
-:root {
-  /*
-  --swiper-pagination-color: var(--swiper-theme-color);
-  --swiper-pagination-left: auto;
-  --swiper-pagination-right: 8px;
-  --swiper-pagination-bottom: 8px;
-  --swiper-pagination-top: auto;
-  --swiper-pagination-fraction-color: inherit;
-  --swiper-pagination-progressbar-bg-color: rgba(0,0,0,0.25);
-  --swiper-pagination-progressbar-size: 4px;
-  --swiper-pagination-bullet-size: 8px;
-  --swiper-pagination-bullet-width: 8px;
-  --swiper-pagination-bullet-height: 8px;
-  --swiper-pagination-bullet-border-radius: 50%;
-  --swiper-pagination-bullet-inactive-color: #000;
-  --swiper-pagination-bullet-inactive-opacity: 0.2;
-  --swiper-pagination-bullet-opacity: 1;
-  --swiper-pagination-bullet-horizontal-gap: 4px;
-  --swiper-pagination-bullet-vertical-gap: 6px;
-  */
-}
+
 .swiper-pagination {
   position: absolute;
   text-align: center;

@@ -23,24 +23,52 @@ $width : 1000px;
     
 }
 
+@mixin delani(){
+    animation: del .5s ease;
+        @keyframes del {
+                0%{
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+                100%{
+                    transform: translateX(-50px);
+                    opacity: 0;
+                }
+        }
+    }
 
-@mixin ani(){
-    animation: ani .5s ease;
-    @keyframes ani {
-        0%{
-            opacity: 0;
-        }
-        100%{
-            opacity: 1;
-        }
-    }    
-}
+
+// @mixin aniCustum(){
+//     animation: ani .5s ease;
+//     @keyframes ani {
+//         0%{
+//             transform : translateX(-50px);
+//             opacity: 0;
+//         }
+//         100%{
+//             transform : translateX(0px);
+//             opacity: 1;
+//         }
+//     }    
+// }
+
+// @mixin ani(){
+//     animation: ani .5s ease;
+//     @keyframes ani {
+//         0%{
+//             opacity: 0;
+//         }
+//         100%{
+//             opacity: 1;
+//         }
+//     }    
+// }
 
 @mixin transX(){
-    animation: transX 1s ease ;
+    animation: transX .5s ease ;
     @keyframes transX {
         0%{
-            transform: translateX(-20px);
+            transform: translateX(-50px);
             opacity: 0;
         }
         100%{
@@ -86,9 +114,10 @@ $width : 1000px;
 
 .calendar-month{
     font-family: var(--title-font);
-    color: rgb(86 86 86);
+    color: rgb(47 61 86);
     font-weight: 400;
-    font-size: 34px;
+    font-weight: bold;
+    font-size: 28px;
     letter-spacing: -1px;
 }
 .ddd{
@@ -143,13 +172,18 @@ body{
 .WeatherBtn{
     box-shadow: -4px -4px 10px rgb(255, 255, 255), 4px 4px 10px rgba(36, 36, 36, 0.15);
     text-align: center;
-    padding: 5px 15px;
+    padding: 0px 15px;
     margin-right: 10px;
-    font-size: .9rem;
-    border-radius: 0.5em;
+    font-size: 0.8rem;
+    border-radius: 2.5em;
+    min-width: 40px;
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
     &.active{
-        background-color: rgb(95, 95, 95);
+        background-color: rgb(76 90 105);
         color: #fff;
     }
 }
@@ -193,9 +227,19 @@ body{
     display: flex;
     justify-content: flex-start;
     padding: 20px;
+    height: 32px;
+    width: calc(100% - 40px);
 }
-
-
+.swiper-wrapper{
+    width: 50%;
+}
+.swiperContents{
+    width: calc(100% - 20px);
+    /* margin-left: 20px; */
+    padding-left: 20px;
+    height: 100px;
+    margin-bottom: 40px;
+}
 .myCalendar .calendar td{
     padding: 10px;
     text-align: center;
@@ -610,12 +654,13 @@ $WeatherCityFont : 20px;
     font-family: var(--title-font);
     margin-bottom: 40px;
     display: flex;
+    height: 328px;
     // height: 100px;
 }
 
 .weatherWrap{
     display: flex;
-    animation: ani 1s ease;
+    // animation: ani 1s ease;
     img{
         width: 50%;
     }
@@ -626,16 +671,66 @@ $WeatherCityFont : 20px;
 }
 
 .swiper-slide{
-    @include ani();
+    display: inline-flex !important;
+    align-items: center;
+    /* padding: 0px 0px 0px 20px; */
+    height: 73px;
+    padding: 10px 16px;
+    width: auto !important;
+    text-align: center;
+    box-shadow: 3px 1px 37px rgba(255, 255, 255, 0.8), 9px -3px 36px rgba(48, 59, 73, 0.24), inset -4px -4px 10px rgba(255, 255, 255, 0.8), inset 4px 4px 10px rgba(34, 48, 65, 0.1);
+    border-radius: 0.5em;
+    flex-direction: column;
+    font-size: 12px;
+    /* border: 1px solid; */
+    margin: 3px;
+    /* border: 1px solid rgba(0, 0, 0, 0.1); */
+    justify-content: flex-end;
+    img{
+        width: 25px;
+        margin-bottom: 12px;
+        /* margin-right: 10px; */
+        filter: drop-shadow(2px 2px 2px #3c4a5e);
+    }
 }
 
-.swiper-wrapper .swiper-slide:not(.swiper-slide-active){
-    opacity: 0 !important;
+// .swiper-wrapper .swiper-slide:not(.swiper-slide-active){
+//     opacity: 0 !important;
+// }
+
+.swiper-wrapper{
+    width: 100%;
+    padding-left: 20px !important;
 }
 
 
-.slide-wrap{
+// .slide-wrap{
+//     display: inline-flex;
+//     align-items: center;
+//     /* padding: 0px 0px 0px 20px; */
+//     height: 73px;
+//     padding: 10px 10px;
+//     text-align: center;
+//     box-shadow: 3px 1px 37px rgba(255, 255, 255, 0.8), 9px -3px 36px rgba(48, 59, 73, 0.24), inset -4px -4px 10px rgba(255, 255, 255, 0.8), inset 4px 4px 10px rgba(34, 48, 65, 0.1);
+//     border-radius: 0.5em;
+//     flex-direction: column;
+//     font-size: 12px;
+//     /* border: 1px solid; */
+//     margin: 3px;
+//     /* border: 1px solid rgba(0, 0, 0, 0.1); */
+//     justify-content: flex-end;
+//     img{
+//         width: 25px;
+//         margin-bottom: 12px;
+//         /* margin-right: 10px; */
+//         filter: drop-shadow(2px 2px 2px #3c4a5e);
+//     }
+// }
+.contents-wrap{
     display: flex;
+    line-height: 1.4em;
+    flex-direction: column;
+    font-size: 14px;
 }
 
 // card
@@ -647,8 +742,10 @@ $WeatherCityFont : 20px;
     cursor: pointer;
     position: relative;
     transition: 1s cubic-bezier(0.445, 0.05, 0.55, 0.95);
-    @include transX();
+    // @include transX();
+
   }
+
 
 
   .card-wrap:hover .card-info p {
@@ -694,7 +791,12 @@ $WeatherCityFont : 20px;
         margin-right: 15px;
         filter: drop-shadow(2px 4px 6px #3c4a5e);
     }
+    @include transX();
   }
+  .removeAnimation{
+        @include delani();
+  }
+
 
   .todayMatch{
     display: flex;
@@ -806,12 +908,20 @@ $WeatherCityFont : 20px;
     align-items: center;
     span{
             font-size: 40px;
-            letter-spacing: -5px;
+            letter-spacing: -2px;
             color: #2f3d56;
             font-weight: bold;
             // span{
             //     font-size: .5rem;
-            // }
+    }
+    .temp-style{
+        display: flex;
+        align-items: flex-end;
+        .ampm{
+            font-size: 12px;
+            letter-spacing: 1px;
+            margin-left: 15px;
+        }
     }
  
   }
@@ -857,6 +967,13 @@ $WeatherCityFont : 20px;
 
   .swiper-container{
     overflow: hidden;
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    box-shadow: 3px 1px 37px rgba(255, 255, 255, 0.8), 9px -3px 36px rgba(48, 59, 73, 0.24), inset -4px -4px 10px rgba(255, 255, 255, 0.8), inset 4px 4px 10px rgba(34, 48, 65, 0.1);
+    border-radius: 1em;
 }
 
 

@@ -72,10 +72,11 @@ function thisClick(){
 const textClock = (date)=>{
     const second = ('0' + date.getSeconds()).slice(-2); // 2자리수가 되면 문자 3자리가 될수도있으니 염두하고 slice(-2) 해야함
     const minit = ('0' + date.getMinutes()).slice(-2); // 2자리수가 되면 문자 3자리가 될수도있으니 염두하고 slice(-2) 해야함
+    const hour = ('0' + date.getHours()).slice(-2); // 2자리수가 되면 문자 3자리가 될수도있으니 염두하고 slice(-2) 해야함
     const day = ('0' + date.getDate()).slice(-2); // 2자리수가 되면 문자 3자리가 될수도있으니 염두하고 slice(-2) 해야함
     const month = ('0' + (date.getMonth() + 1)).slice(-2);
     
-    const formattedTime = `${month}월 ${day}일 ${minit}분 ${second}초`;
+    const formattedTime = `${month}월 ${day}일 ${hour}시 ${minit}분 ${second}초`;
     return formattedTime;
 }
 
@@ -106,9 +107,9 @@ function tilt(event) {
     var bodyWidth = document.body.clientWidth;
     var bodyHeight = document.body.clientHeight;
 
-    var sxPos = ((event.pageX / bodyWidth) * 100 - 50) * 10;
+    var sxPos = ((event.pageX / bodyWidth) * 100 - 50) * 30;
     //   console.log(sxPos);
-    var syPos = ((event.pageY / bodyHeight) * 100 - 50) * 5;
+    var syPos = ((event.pageY / bodyHeight) * 100 - 50) * 10;
     //   console.log(syPos);
 
     setTransform(card, -0.03 * sxPos, 0.03 * syPos );
