@@ -15,7 +15,6 @@
         <!-- 타이머 -->
         <div class="timer"></div>
         <div id="waether">
-            
             <div class="card-wrap" onmousemove="tilt(event)" onmouseleave="resetTilt(this)"></div>
             <div class="dashBoard"></div>
         </div>
@@ -23,18 +22,17 @@
         <div class="wrap">
             <!-- 캘린더 -->
             <div id="myCalendar" class="myCalendar"></div>
+
             <!-- TodoList -->
             <div class="wrap_list">
+                <div id="TododashBoard"></div>
                 <div class="listArea">
                     <div id="todoList"></div>
                 </div>
             </div>
+            
         </div>
     </div>
-
-    <input type="text" id="userInput" placeholder="어떤 기능을 구현하고 싶으세요?">
-<button onclick="generateCode()">코드 생성</button>
-<pre id="codeSnippet"></pre>
 
     <footer id="footer"></footer>
 
@@ -45,26 +43,7 @@
 <script src="./calendar.js"></script>
 <script src="./todoList.js"></script>
 <script src="./weatherModule.js"></script>
-<script>
-    // JavaScript 코드
-function generateCode() {
-  // 사용자 입력 받기
-  var userInput = document.getElementById('userInput').value;
 
-  // 입력에 따라 코드 생성 (간단한 예시)
-  var code = "";
-  if (userInput.toLowerCase().includes('버튼')) {
-    code = "const button = document.createElement('button');\n";
-    code += "button.innerHTML = 'Click me';\n";
-    code += "document.body.appendChild(button);";
-  } else {
-    code = "// 해당 기능에 대한 코드를 생성할 수 없습니다.";
-  }
-
-  // 생성된 코드를 화면에 출력
-  document.getElementById('codeSnippet').textContent = code;
-}
-</script>
 <!-- lib -->
 <script src="./lib/swiper.bundle.js"></script>
 <link rel="stylesheet" href="./lib/swiper-bundle.css" />

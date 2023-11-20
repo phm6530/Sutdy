@@ -229,8 +229,8 @@ function addSliderContainer(allData){
     swiperWrapper.innerHTML = html;
     
     const mySwiper = new Swiper('.swiper-container', {
-        slidesPerView: 10,
-        spaceBetween: 10,
+        slidesPerView: 9,
+        spaceBetween: 20,
         freeMode: true
     });
 }

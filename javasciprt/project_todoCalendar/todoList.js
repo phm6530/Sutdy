@@ -2,57 +2,44 @@
     const todoListDiv = document.getElementById('todoList'); // 투두리스트 뿌려질 영역
     const localData = localStorage.getItem('Todolist');
 
-    // 더미 데이터
-    // const DummyData = {
-    //     '202311' : {
-    //         '1' : [
-    //             {
-    //                 key : 0,
-    //                 date : `2023.11.09`,
-    //                 check : false,
-    //                 title : `첫번 째` 
-    //             },
-    //             {
-    //                 key : 1,
-    //                 date : `2023.11.09`,
-    //                 check : false,
-    //                 title : `두번 째` 
-    //             }
+    const todolistDashBoard = document.getElementById('TododashBoard');
+    todolistDashBoard.classList.add('TododashBoard');
 
-    //         ],
-    //         '2' : [
-    //             {
-    //                 key : 0,
-    //                 date : `2023.11.09`,
-    //                 check : false,
-    //                 title : `오늘 할일` 
-    //             },
-    //             {
-    //                 key : 1,
-    //                 date : `2023.11.09`,
-    //                 check : false,
-    //                 title : `오늘 할일` 
-    //             }
+    const StateTable = createAndAppend(todolistDashBoard , 'div', '', 'TododashButton status');
+    const todayFIlter = createAndAppend(todolistDashBoard , 'div', '', 'TododashButton dashToday');
+    const notYetFilter = createAndAppend(todolistDashBoard , 'div', '', 'TododashButton notYet');
+    const completeFIlter = createAndAppend(todolistDashBoard , 'div', '', 'TododashButton complete');
+    StateTable.classList.add('active');
+    notYetFilter.setAttribute('onclick',`testa(true)`);
+    completeFIlter.setAttribute('onclick',`testa(false)`);
 
-    //         ],
-    //         '12' : [
-    //             {
-    //                 key : 0,
-    //                 date : `2023.11.11`,
-    //                 check : false,
-    //                 title : `오늘 할일` 
-    //             },
-    //             {
-    //                 key : 1,
-    //                 date : `2023.11.19`,
-    //                 check : false,
-    //                 title : `오늘 할일` 
-    //             }
+    StateTable.addEventListener('click', () => {
+        renderNotThisMonth(ViewYear ,ViewMonth , ViewDay);
+       
+        if(todayFIlter.classList.contains('active')){
+            todayFIlter.classList.remove('active');
+            StateTable.classList.add('active');
+        }
+    });
+    todayFIlter.addEventListener('click', () => {
+        const today = document.querySelector('.today');
+        if(StateTable.classList.contains('active')){
+            StateTable.classList.remove('active');
+            todayFIlter.classList.add('active');
+        }
+        today.classList.remove('active');
+        today.click();
+        today.classList.add('active');
+    });
 
-    //         ]
-    //     }
-
-    // }
+    const targetclass = document.querySelector('.status');
+    
+    targetclass.addEventListener('click', () => {
+        const targetElements = document.querySelectorAll('td');
+        targetElements.forEach(tdElement => {
+            tdElement.classList.remove('active');
+        });
+    });
 
     let todoArr = !localData ? {} : JSON.parse(localData);
     const MSG = {
@@ -61,7 +48,26 @@
         3: '일정을 입력해주세요!'
     }
 
- 
+    const testa = (active) => {
+        const filterRing = {
+            true: (e) => e.check === true,
+            false: (e) => e.check !== true,
+        }
+    
+        const selectMonth = todoArr[`${ViewYear}${ViewMonth}`];
+        const selectDay = selectMonth ? selectMonth[ViewDay] : [];
+    
+        todoListDiv.textContent = '';
+        const filterArr = selectDay.filter(filterRing[active]);
+        if(filterArr.length !== 0){
+            filterArr.forEach(e => todoListDiv.appendChild(createTodoItemHTML(e)));
+            return
+        }
+        todoListDiv.innerHTML = `<div class="todoList infoClass">데이터가 없습니다.</div> `;        
+    };
+    
+
+        
     
     const createForm = () => {
         const addForm = document.createElement('form');
@@ -196,7 +202,8 @@
                 acc += trueArr.length;
                 return acc;
             }, 0);
-            testDIV.textContent += `${Month}월에는 총 일정이\n ${Sum}건이 있어요! ${Math.floor(falseSum/Sum * 100)}% 완료하셨네요!`;
+            testDIV.innerHTML += `${Month}월에는 총 일정이\n ${Sum}건이 있어요! ${Math.floor(falseSum/Sum * 100)}% 완료하셨네요!`;
+            testDIV.innerHTML += `<span>hi hello </span>`
     
             num.forEach((key) => {
                 const isSucusess = createDiv('YoN');
@@ -259,7 +266,6 @@
         localStorage.setItem('Todolist', JSON.stringify(todoArr));
         todoListDiv.textContent = '';
         todoListDiv.appendChild(html);
-       
     }
 
     const chkList = (item) => {

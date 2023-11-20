@@ -7,9 +7,6 @@ const todayDate = createAndAppend(navDiv, 'div' , '', 'calendar-month');
 const btnPrev = createAndAppend(navDiv, 'button', '' , 'btn-prev');
 const btnNext = createAndAppend(navDiv, 'button', '' , 'btn-next');
 const thisMonthStatus = createAndAppend(navDiv, 'div', '', 'nav_bar');
-const StateTable = createAndAppend(thisMonthStatus, 'div', 'Status Table', 'status');
-
-StateTable.addEventListener('click', () => renderNotThisMonth(ViewYear ,ViewMonth , ViewDay));
 
 // 날짜 배열로 ..
 
@@ -121,14 +118,6 @@ const addClickHandler = (ClassName ,  callback)=>{
     callback(target);
 }
 
-const targetclass = document.querySelector('.status');
-
-targetclass.addEventListener('click', () => {
-    const targetElements = document.querySelectorAll('td');
-    targetElements.forEach(tdElement => {
-        tdElement.classList.remove('active');
-    });
-});
 
 const ClickEvent = (div) => {
     div.forEach(e => {

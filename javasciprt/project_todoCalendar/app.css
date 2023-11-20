@@ -175,7 +175,7 @@ body {
   box-sizing: border-box;
   height: 30px;
   font-family: var(--title-font);
-  height: 44px;
+  height: 48px;
   border-radius: 100%;
   font-size: 14px;
 }
@@ -271,13 +271,13 @@ table {
   overflow-y: scroll;
   flex-direction: column;
   overflow-y: scroll;
-  max-height: 464px;
+  max-height: 421px;
 }
 .listArea .todoList {
-  margin: 0px 1px 20px 5px;
-  border-radius: 1rem;
-  padding: 14px;
-  box-shadow: -4px -4px 15px rgba(255, 255, 255, 0.7), 4px 4px 15px rgba(36, 36, 36, 0.15);
+  margin: 0px 1px 1px 5px;
+  /* border-radius: 1rem; */
+  padding: 7px;
+  /* box-shadow: -4px -4px 15px rgba(255, 255, 255, 0.7), 4px 4px 15px rgba(36, 36, 36, 0.15); */
   min-height: 30px;
   border-bottom: 1px dotted rgba(0, 0, 0, 0.1);
   font-size: 14px;
@@ -323,7 +323,7 @@ table {
 }
 
 #todoList {
-  padding: 20px 20px;
+  padding: 20px 2px;
 }
 
 input[type=text] {
@@ -390,6 +390,7 @@ input[type=text]:focus {
   justify-content: space-between;
   margin: 10px 0;
   align-items: center;
+  font-weight: bold;
   padding: 5px 0px;
   font-family: var(--title-font);
 }
@@ -487,27 +488,32 @@ input[type=checkbox] {
   background-color: rgba(110, 133, 184, 0.1882352941);
 }
 
-.status {
+.TododashButton {
   font-family: var(--title-font);
   display: inline-block;
   background: #e5e9f2;
   font-weight: bold;
-  padding: 8px 19px 8px 25px;
-  border-radius: 3em;
+  /* padding: 8px 19px 8px 25px; */
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+  display: flex;
+  border-radius: 1em;
   color: rgba(38, 65, 125, 0.6);
   font-size: 11px;
   cursor: pointer;
   box-shadow: -3px -1px 13px rgb(255, 255, 255), 9px 4px 18px rgba(36, 36, 36, 0.15);
   position: relative;
   box-shadow: -4px -4px 10px rgb(255, 255, 255), 4px 4px 10px rgba(36, 36, 36, 0.15);
+  align-items: center;
+  justify-content: center;
 }
-.status::after {
+.TododashButton::after {
   font-family: "fontawesome";
-  content: "\f002";
   position: absolute;
   top: 50%;
-  font-size: 10px;
-  left: 15px;
+  font-size: 19px;
+  left: 50%;
   transform: translate(-50%, -50%);
 }
 
@@ -574,10 +580,12 @@ input[type=checkbox] {
   align-items: center;
   /* padding: 0px 0px 0px 20px; */
   text-align: center;
-  box-shadow: 3px 1px 17px rgba(255, 255, 255, 0.8), 1px -1px 4px rgba(48, 59, 73, 0.24), inset -4px -2px 11px rgba(255, 255, 255, 0.8), inset 4px 4px 10px rgba(34, 48, 65, 0.1);
+  box-shadow: 3px 1px 17px rgba(255, 255, 255, 0.8), 1px -1px 4px rgba(48, 59, 73, 0.24);
   border-radius: 0.5em;
   flex-direction: column;
+  padding-bottom: 15px;
   font-size: 12px;
+  border-radius: 6em;
   display: flex !important;
   /* border: 1px solid; */
   /* border: 1px solid rgba(0, 0, 0, 0.1); */
@@ -587,6 +595,10 @@ input[type=checkbox] {
   width: 25px;
   margin-bottom: 12px;
   /* margin-right: 10px; */
+  border-bottom: 2px solid rgba(3, 15, 31, 0.03);
+  padding: 10px;
+  /* background: #a6eeff29; */
+  /* border-radius: 4em; */
   filter: drop-shadow(2px 2px 2px #3c4a5e);
 }
 
@@ -871,16 +883,54 @@ input[type=checkbox] {
 .swiper-container {
   overflow: hidden;
   display: flex;
-  width: 100%;
+  width: calc(100% - 15px);
   flex-direction: row;
   padding-top: 45px;
   padding-bottom: 25px;
+  padding-left: 10px;
   height: 100px;
   flex-wrap: wrap;
   align-content: flex-start;
   /* box-shadow: 3px 1px 37px rgba(255, 255, 255, 0.8), 9px -3px 36px rgba(48, 59, 73, 0.24), inset -4px -4px 10px rgba(255, 255, 255, 0.8), inset 4px 4px 10px rgba(34, 48, 65, 0.1); */
   /* border-radius: 1em; */
   margin-left: 20px;
+}
+
+.TododashBoard {
+  box-shadow: -4px -4px 15px rgba(255, 255, 255, 0.7), 4px 4px 15px rgba(36, 36, 36, 0.15);
+  /* width: 100%; */
+  padding: 10px;
+  border-radius: 1em;
+  display: flex;
+  justify-content: flex-start;
+}
+.TododashBoard .status::after {
+  content: "\f0ca";
+}
+.TododashBoard .notYet::after {
+  content: "\f28d";
+}
+.TododashBoard .complete::after {
+  content: "\f14a";
+}
+.TododashBoard .dashToday::after {
+  content: "Today";
+  font-weight: bold;
+  font-size: 8px;
+}
+
+@keyframes ani1 {
+  0% {
+    transform: translate(-100px);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(0);
+    opacity: 1;
+  }
+}
+.TododashButton:active {
+  box-shadow: 3px 1px 17px rgba(255, 255, 255, 0.8), 1px -1px 4px rgba(48, 59, 73, 0.24);
 }
 
 .footer {
