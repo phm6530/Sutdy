@@ -39,12 +39,18 @@ Font Awesome을 React 컴포넌트 형태로 사용 할 수 있게하는 패키�
 
 
 # GIT
+- 
+git config user.name	# 이름 확인
+git config user.email	# 이메일 확인
+
 - .gitignore 파일 : push 예외파일반영
 Ignore node_modules directory
 /node_modules
 
 Ignore yarn lock file
 /yarn.lock
+
+
 
 # mysql install
 1. mysql -u 아이디 -p패스워드
