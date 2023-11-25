@@ -3,31 +3,42 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>코드 스니펫 생성기</title>
+  <title>Editable Input</title>
+  <style>
+    /* Optional: 스타일링을 위한 CSS */
+    .btnCheck {
+      width: 200px;
+    }
+  </style>
 </head>
 <body>
+  <input class="btnCheck" type="text" input-data="3" readonly="true">
+  <button onclick="enableEditing('3')">수정</button>
 
-<input type="text" id="userInput" placeholder="어떤 기능을 구현하고 싶으세요?">
-<button onclick="generateCode()">코드 생성</button>
-<pre id="codeSnippet"></pre>
+  <script>
+    function enableEditing(item) {
+      const target = document.querySelector(`[input-data='${item}']`);
 
-<script>
-function generateCode() {
-  var userInput = document.getElementById('userInput').value;
-  var code = "";
+      // readonly 속성이 설정되어 있을 때
+      if (target.hasAttribute('readonly')) {
+        target.removeAttribute('readonly');
+        target.focus();
+      } else {
+        // readonly 속성이 설정되어 있지 않을 때
+        target.setAttribute('readonly', 'true');
+      }
+    }
 
-  // 예시: '버튼'이라는 단어가 입력에 포함되면 버튼을 만드는 코드 생성
-  if (userInput.toLowerCase().includes('버튼')) {
-    code = "const button = document.createElement('button');\n";
-    code += "button.innerHTML = 'Click me';\n";
-    code += "document.body.appendChild(button);";
-  } else {
-    code = "// 해당 기능에 대한 코드를 생성할 수 없습니다.";
-  }
-
-  document.getElementById('codeSnippet').textContent = code;
-}
-</script>
-
+    // 엔터 키 감지
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') {
+        if (document.activeElement.tagName === 'INPUT') {
+          // 현재 활성화된 요소가 입력 상자인 경우
+          document.activeElement.blur();
+          document.activeElement.setAttribute('readonly', 'true');
+        }
+      }
+    });
+  </script>
 </body>
 </html>

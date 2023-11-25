@@ -51,6 +51,15 @@ const creatInput = (id, type) =>{
     return input;
 }
 
+const creatInputClass = (Class, type) =>{
+    const input = document.createElement('input');
+    input.classList.add(Class);
+    input.setAttribute( 'type' , type);
+    return input;
+}
+
+
+
 // span 생성
 const creatSpan = (className) =>{
     const input = document.createElement('span');

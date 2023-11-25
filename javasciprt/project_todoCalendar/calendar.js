@@ -100,7 +100,7 @@ const render = (year , month)=> {
             else if (day <= isLastDay[month - 1]) {
                 const currentDate = new Date(year, month - 1, day);
                 const isToday = currentDate.toDateString() === today.toDateString();
-                html += `<td class="${isToday ? 'today' : ''}">${day++}</td>`;
+                html += `<td class="${isToday ? 'today active ' : ''}">${day++}</td>`;
             } else {
                 html += `<td class="NotThisMonth"></td>`;
             }

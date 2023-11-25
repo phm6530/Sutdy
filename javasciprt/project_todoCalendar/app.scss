@@ -90,17 +90,14 @@ $width : 1000px;
     position: absolute;
     font-family: 'fontawesome';
     color: #26417d;
-    opacity: .5;
+    opacity: .4;
 }
 
 .wrap{
     display: flex;
 }
 
-/* icon */
-.deleteIcon::after{
-    content: '\f2ed';
-}
+
 
 .centerIcon{
     position: relative;
@@ -230,9 +227,7 @@ body{
     height: 32px;
     width: calc(100% - 40px);
 }
-.swiper-wrapper{
-    // width: 50%;
-}
+
 .swiperContents{
     width: calc(100% - 20px);
     /* margin-left: 20px; */
@@ -348,6 +343,7 @@ table{
 
     .todoList {
         margin: 0px 1px 1px 5px;
+        display: flex;
         /* border-radius: 1rem; */
         padding: 7px;
         /* box-shadow: -4px -4px 15px rgba(255, 255, 255, 0.7), 4px 4px 15px rgba(36, 36, 36, 0.15); */
@@ -357,6 +353,8 @@ table{
         font-family: var(--title-font);
         animation: fadeUp 0.3s ease;
         position: relative;
+        flex-direction: row;
+        flex-wrap: wrap;
     }
     .infoClass{
         box-shadow: none;
@@ -366,22 +364,16 @@ table{
 }
 
 
-.todoList{
-    &::after {
-        content: "3";
-        left: 20px;
-        top: 50%;
-        width: 30px;
-        height: 30px;
-        display: flex;
-        border-radius: 100%;
-        background-color: #8494b75e;
-        transform: translate(0%, -50%);
-        position: absolute;
-        color: #fff;
-        align-items: center;
-        justify-content: center;
-    }
+.todoList-type{
+    width: 30px;
+    height: 30px;
+    display: flex;
+    border-radius: 100%;
+    background-color: rgba(132, 148, 183, 0.18);
+    
+    color: #fff;
+    align-items: center;
+    justify-content: center;
 }
 
 
@@ -410,7 +402,7 @@ table{
 
 
 input[type=text]{
-    width: calc(100% - 20px);
+    width: calc(100% - 24px);
     border: 0;
     border-radius: 3em;
     padding: 10px;
@@ -485,6 +477,9 @@ input[type=text]:focus{
     display: flex;
     align-items: center;
     justify-content: space-between;
+    /* background: red; */
+    width: calc(100% - 40px);
+    margin-left: 10px;
 }
 
 #form{
@@ -495,8 +490,7 @@ input[type=text]:focus{
 .workText{
     display: flex;
     flex-direction: column;
-    width: calc(100% - 70px);
-    margin-left: 50px;
+    width: calc(100% - 60px);
     /* background: red; */
 }
 
@@ -506,7 +500,7 @@ input[type=text]:focus{
 }
 .workTitle{
     font-family: var(--title-font);
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     text-shadow: 0 0;
     letter-spacing: -.5px;
 }
@@ -522,6 +516,7 @@ input[type=checkbox] {display:none;}
 .radio-label {
   display:inline-block;
   cursor:pointer;
+  width: 100%;
   -webkit-transition: all 0.3s ease-out;
   -moz-transition: all 0.3s ease-out;
   -ms-transition: all 0.3s ease-out;
@@ -539,11 +534,15 @@ input[type=checkbox] {display:none;}
   transition: opacity 0.3s ease-out;
 }
 
+.workTitle button[type=submit]{
+    display: none;
+}
 
 .complete  .radio-label i { opacity: 1;}
-.radio-label span {
+.wrap_list label form  {
     display:inline-block;
     font-size: 14px;
+    width: calc(100% - 23px);;
     -webkit-transition: all 0.3s ease-out;
     -moz-transition: all 0.3s ease-out;
     -ms-transition: all 0.3s ease-out;
@@ -555,7 +554,7 @@ input[type=checkbox] {display:none;}
     -o-transform:translateX(-13px);
     transform: translateX(-20px);
 }
-.complete  .radio-label span {
+.complete  .radio-label form {
   -webkit-transform:translateX(0);
   -moz-transform:translateX(0);
   -ms-transform:translateX(0);
@@ -625,6 +624,9 @@ input[type=checkbox] {display:none;}
 
 .btnCheck{
     position: relative;
+    font-family: var(--title-font);
+    letter-spacing: -1px;
+    border-radius: 2px !important;
     &::after{
         border-bottom: 1px solid rgba(54, 54, 54, 0.7);
         content: "";
@@ -988,12 +990,6 @@ $WeatherCityFont : 20px;
     
   }
 
-  .swiper-container{
-    // background-color: red;
-    // display: none !important;
-    // width: 50% !important;
-    
-    }
 .dashBoard{
     display: flex;
     flex-direction: column;
@@ -1082,3 +1078,35 @@ $WeatherCityFont : 20px;
     margin-top: 50px;
     height: 100px;
 }
+.moreAction{
+    position: relative;
+}
+
+.deleteIcon{
+    // position: absolute;
+    left: 0;
+    top:0;
+    /* icon */
+    &::after{
+        content: '\f2ed';
+    }
+}
+.reviseIcon{
+    left: 0;
+    top:0;
+    &::after{
+        content: '\f304';
+    }
+}
+.listbtnstyle{
+    border: 0;
+    background: transparent;
+    width: 20px;
+    cursor: pointer;
+}
+
+.btnCheck{
+    box-shadow: none !important;
+    padding: 0 !important;
+}
+

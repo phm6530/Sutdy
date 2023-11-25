@@ -1,7 +1,7 @@
     const wrapList = document.querySelector('.wrap_list'); // Todo Wrap
     const todoListDiv = document.getElementById('todoList'); // 투두리스트 뿌려질 영역
     const localData = localStorage.getItem('Todolist');
-
+    // console.log(localData);
     const todolistDashBoard = document.getElementById('TododashBoard');
     todolistDashBoard.classList.add('TododashBoard');
 
@@ -22,14 +22,25 @@
         }
     });
     todayFIlter.addEventListener('click', () => {
-        const today = document.querySelector('.today');
-        if(StateTable.classList.contains('active')){
-            StateTable.classList.remove('active');
-            todayFIlter.classList.add('active');
-        }
-        today.classList.remove('active');
-        today.click();
-        today.classList.add('active');
+        const year = new Date().getFullYear();
+        const month = new Date().getMonth() + 1;
+        const day = new Date().getDate();
+
+        ViewDay = day;//일정 통일
+        render(year,month);
+        addClickHandler('td' , ClickEvent);
+        renderTodoList(year, month, day);
+        // renderNotThisMonth(year, month, day)
+        // const today = document.querySelector('.today');
+        // if(StateTable.classList.contains('active')){
+        //     StateTable.classList.remove('active');
+        //     todayFIlter.classList.add('active');
+        // }else{
+        //     render(ViewYear , ViewMonth);
+        // }
+        // today.classList.remove('active');
+        // today.click();
+        // today.classList.add('active');
     });
 
     const targetclass = document.querySelector('.status');
@@ -48,7 +59,15 @@
         3: '일정을 입력해주세요!'
     }
 
-    const testa = (active) => {
+    const testa = (active) => { 
+        const target = document.querySelectorAll('.custum-calendar td');
+        const find =  [...target].find(e=> e.classList.contains('active'));
+        
+        if(!find){
+            alert('달력에서 일을 선택해주세요.');
+            return;
+        }
+
         const filterRing = {
             true: (e) => e.check === true,
             false: (e) => e.check !== true,
@@ -56,12 +75,15 @@
     
         const selectMonth = todoArr[`${ViewYear}${ViewMonth}`];
         const selectDay = selectMonth ? selectMonth[ViewDay] : [];
+        
     
         todoListDiv.textContent = '';
-        const filterArr = selectDay.filter(filterRing[active]);
-        if(filterArr.length !== 0){
-            filterArr.forEach(e => todoListDiv.appendChild(createTodoItemHTML(e)));
-            return
+        if(selectDay){
+            const filterArr = selectDay.filter(filterRing[active]);
+            if(filterArr.length !== 0){
+                filterArr.forEach(e => todoListDiv.appendChild(createTodoItemHTML(e)));
+                return
+            }
         }
         todoListDiv.innerHTML = `<div class="todoList infoClass">데이터가 없습니다.</div> `;        
     };
@@ -134,9 +156,11 @@
         const div = createDiv('todoList');
         const divInfo = createDiv('todoInfo');
         const btnDelete = createButton(`delArr( ${element.key} , event)`);
+        const btnRevise = createButton(`btnRevise( ${element.key} , event)`);
         
-        btnDelete.classList.add('deleteIcon' , 'centerIcon' , 'btn-styleType1');
-        div.setAttribute('onclick', `chkList(${element.key})`);
+        btnDelete.classList.add('deleteIcon' , 'centerIcon' , 'listbtnstyle');
+        btnRevise.classList.add('reviseIcon' , 'centerIcon' , 'listbtnstyle');
+   
 
         
         element.check === true ? div.classList.add('complete') : undefined ;
@@ -149,38 +173,90 @@
         div.setAttribute('date-key', `${element.key}`);
         const icon = document.createElement('i');
         icon.classList.add('fa','fa-check');
-    
-    
+        // element.forEach((e)=> console.log(e));
+        // console.log(result);
+
+        const todoListType = createDiv('todoList-type');
+        todoListType.textContent = 1;
+        todoListType.setAttribute('onclick', `chkList(${element.key})`)
         const workText = createDiv('workText');
         const workTitle = creatSpan('workTitle');
         const workDate = creatSpan('workDate');
-        const btnCheck = creatSpan('btnCheck');
-        btnCheck.textContent = `${element.title}`;
 
+        const Form = document.createElement('form');
+        Form.setAttribute('onsubmit', 'return false');
+        const btnCheck = creatInputClass('btnCheck' , 'text');
+        const FormBtn = document.createElement('button')
+        FormBtn.setAttribute('type','submit');
+        btnCheck.setAttribute('input-data', element.key);
+        btnCheck.setAttribute('readonly', true);
+        btnCheck.setAttribute('onkeydown' , `handleEnter(${element.key}, event)`)
+        // btnCheck.setAttribute('onfocus' , ' handleFocus(event)')
+        btnCheck.setAttribute('onblur' , `handleBlur(${element.key}, event)`)
+        btnCheck.value = `${element.title}`;
+        
     
         const Label = document.createElement('label');
         Label.setAttribute('for', `chk${element.key}`);
         Label.classList.add('radio-label');
         Label.appendChild(icon);
-        Label.appendChild(btnCheck);
+        Form.appendChild(btnCheck);
+        Label.appendChild(Form);
         
-
+        
         
         // workTitle.appendChild(addCheck);
-        
+        div.appendChild(todoListType);
         workDate.textContent = element.date;
         workTitle.appendChild(Label)
         workText.appendChild(workTitle);
         workText.appendChild(workDate);
         // divInfo.textContent = `${element.key + 1} ${element.title} ${element.date}`;
         divInfo.append(workText);
+        divInfo.append(btnRevise);
         divInfo.append(btnDelete);
+        Form.appendChild(FormBtn);
         div.append(divInfo);
+        
 
         return div;
     }
     
+    const btnRevise = (item , e)=>{
+
+        e.preventDefault();
+        const target = document.querySelector(`[input-data='${item}']`)
+        target.style.background = '#fff';
+        target.removeAttribute('readonly');
+        target.focus();
+        
+    }
     
+    function handleEnter(item , event) {
+        if (event.key === 'Enter') {
+          event.preventDefault();
+          event.stopPropagation(); // 이벤트의 버블링을 중지
+          const inputElement = event.target;
+          inputElement.blur();
+          inputElement.setAttribute('readonly', 'true');
+          reviseSubmit(item);
+        }
+      }
+
+      function handleBlur(item , event) {
+        const inputElement = event.target;
+        inputElement.setAttribute('readonly', 'true');
+        reviseSubmit(item);
+      }
+
+      const reviseSubmit = (item) =>{
+        const targetArray = todoArr[`${ViewYear}${ViewMonth}`][ViewDay];
+        const find = targetArray.findIndex((idx) => item === idx.key);
+        const target = document.querySelector(`[input-data='${item}']`)
+        target.style.background = 'transparent';
+        targetArray[find].title = target.value;
+      }
+
 
     const renderNotThisMonth = (Year, Month, day) => {
         const testDIV = createDiv('todoList');
@@ -203,12 +279,11 @@
                 return acc;
             }, 0);
             testDIV.innerHTML += `${Month}월에는 총 일정이\n ${Sum}건이 있어요! ${Math.floor(falseSum/Sum * 100)}% 완료하셨네요!`;
-            testDIV.innerHTML += `<span>hi hello </span>`
     
             num.forEach((key) => {
                 const isSucusess = createDiv('YoN');
                 const resultDIV = createDiv('result');
-                resultDIV.setAttribute('onClick',` renderTodoList(ViewYear, ViewMonth, ${key});`);
+                resultDIV.setAttribute('onClick',` renderTodoList(${ViewYear}, ${ViewMonth}, ${key});`);
                 resultDIV.textContent += `${key}일 
                 ${isMonth[key].reduce((acc , e)=>{
                     e.check === true ? acc ++ : acc ;
@@ -222,7 +297,6 @@
             });
             
         }
-
         
         todoListDiv.textContent = '';
         todoListDiv.appendChild(testDIV);
@@ -231,7 +305,10 @@
 
     // 랜더링
     const renderTodoList = (Year, Month, day) => {
+        ViewYear = Year;
+        ViewMonth = Month;
         ViewDay = day;
+        
         if (!document.getElementById('form')) {
             ListSubmit();
         }
@@ -240,7 +317,14 @@
         isWorkday(); // 달력에 확인 표시 추가
         const selectMonth = todoArr[`${Year}${Month}`];
         const testDIV = createDiv('todoList');
-    
+        // console.log(selectMonth);
+        // console.log(selectMonth[day]);
+        // const test = [];
+        // selectMonth[day].forEach((e,idx)=>{
+        //     test.push(idx + 1);
+        // });
+        // console.log(test);
+
         let html;
         if (!selectMonth) {
             testDIV.textContent = `${Month}월은 일정이 없네요`;
@@ -250,10 +334,10 @@
             const selectDay = selectMonth[day];
             if (!selectDay || selectDay.length === 0) {
                 testDIV.classList.add('infoClass');
+                
                 testDIV.textContent = day === ViewDay ? `오늘은 일정이없네요` : `${Month}월 ${day}일은 일정이 없습니다`;
                 html = testDIV;
             } else {
-                // console.log(selectDay);
                 todoListDiv.textContent = '';
                 selectDay.forEach(element => {
                     todoListDiv.appendChild(createTodoItemHTML(element));
@@ -270,14 +354,16 @@
 
     const chkList = (item) => {
         const chkChange = todoArr[`${ViewYear}${ViewMonth}`][ViewDay];
+        console.log(chkChange);
         chkChange.forEach((e) => e.key === item ? e.check = !e.check : e.key);
         localStorage.setItem('Todolist', JSON.stringify(todoArr));
         isWorkday();
         const select = document.querySelector(`[date-key="${item}"]`);
         select.classList.toggle('complete');
-        const findChkindex = chkChange.find(e => {
-            return e.key === item
-        });
+
+        // const findChkindex = chkChange.find(e => {
+        //     return e.key === item
+        // });
         // updateTodoItem(findChkindex)
     }
 
@@ -290,6 +376,7 @@
     // }
 
     const delArr = (item, e) => {
+        console.log(item);
         e.stopPropagation(); // 상위 버블링 하는거 막는거임
         if (confirm('삭제하시겠습니까?')) {
             const targetArray = todoArr[`${ViewYear}${ViewMonth}`][ViewDay];
