@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>  
+
+    <div class="timer"></div>
+    <div id="noticeDetail"></div>
+
+    <input type="text" class="check">
+    <input type="text" class="check">
+    <button>Submit</button>
+
+    <button onclick="back()">뒤로 가기</button>
+</body>
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get('id'); // '123'
+
+    const timerTarget = document.querySelector('.timer');
+
+    // 디바운싱 구현 
+    const check = document.querySelector('.check');
+
+    var checking;
+    check.addEventListener('input',()=>{
+        if(checking){
+            clearInterval(checking);
+        }
+        checking = setTimeout(()=>{
+            if(check.value.trim().length < 50){
+                alert('50자보다 길게쓰세요');
+            }
+        },1000);
+    });
+    
+
+
+    setInterval(() => {
+        const timeString = new Date().toLocaleTimeString();
+        const timer = timeString.replace('오전', 'AM').replace('오후', 'PM');
+        timerTarget.textContent = timer;
+    }, 1000);
+
+
+    // div 생성
+    const createAndAppend = (parent,  className ) => {
+        const element = document.createElement('div');
+        element.className = className;
+
+        parent.appendChild(element);
+        return element;
+    };
+
+    const back = () =>{
+        window.history.back();
+    }
+
+    // 랜딩 데이터
+    const rendingData = (noticeData) =>{
+        const parent = document.getElementById('noticeDetail');
+        // title
+        const title = createAndAppend(parent, 'title');
+        title.textContent = noticeData.title;  
+
+        // date
+        const date = createAndAppend(parent, 'date');
+        const today = new Date().getDay();
+        const day = ['일','월','화','수','목','금','토'];
+
+        date.textContent = noticeData.createdAt.split('T')[0] + day[today] + '요일';
+
+
+
+        // body
+        const body = createAndAppend(parent, 'content');
+        body.textContent = noticeData.content;  
+    }
+
+    const noticeDetailData = () =>{
+        fetch(`https://koreanjson.com/posts/${id}`)
+            .then(res => {
+                if(!res.ok){
+                    throw new Error('뭔가 잘못됨')
+                }
+                return res.json();
+            })
+            .then(data =>
+                {
+                    rendingData(data);
+                    console.log(data);  
+
+                }
+            )
+            .catch(error=>{
+                console.error(error);
+            })
+    }
+
+    noticeDetailData();
+
+    
+</script>
+</html>

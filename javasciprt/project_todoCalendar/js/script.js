@@ -58,15 +58,12 @@ const creatInputClass = (Class, type) =>{
     return input;
 }
 
-
-
 // span 생성
 const creatSpan = (className) =>{
     const input = document.createElement('span');
     input.classList.add(className);
     return input;
 }
-
 
 // 타이머
 const timerDiv = createDiv('timer');
@@ -88,6 +85,7 @@ const textClock = (date)=>{
     const formattedTime = `${month}월 ${day}일 ${hour}시 ${minit}분 ${second}초`;
     return formattedTime;
 }
+
 
 const appendClock = (data) =>{
     const clockElement = document.createElement('div');
@@ -116,7 +114,7 @@ function tilt(event) {
     var bodyWidth = document.body.clientWidth;
     var bodyHeight = document.body.clientHeight;
 
-    var sxPos = ((event.pageX / bodyWidth) * 100 - 50) * 30;
+    var sxPos = ((event.pageX / bodyWidth) * 100 - 50) * 10;
     //   console.log(sxPos);
     var syPos = ((event.pageY / bodyHeight) * 100 - 50) * 10;
     //   console.log(syPos);

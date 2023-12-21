@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table{
+            table-layout: fixed;
+            width: 100%;
+        }
+
+        .idx{
+            width: 50px;
+            font-size: 13px;
+        }
+
+        .date{
+            width: 15%;
+            font-size: 13px;
+        }
+
+        /* table 태그에서 말줄임 사용하는 방법
+        table {table-layout: fixed;}
+        말줄임이 필요한 셀렉트 {white-space:nowrap; text-overflow:ellipsis; overflow:hidden; */
+
+        table td{
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .active{
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="test"></div>
+    <div id="notice"></div>
+    <div id="paging"></div>
+    
+    <div class="seach">
+        <form id="form">
+            <input type="text" value="" class="seachInput">
+            <button onclick="seach()">검색</button>
+        </form>
+    </div>
+</body>
+
+<script>
+        
+    // const seach = () => {
+    //     const seachInput = document.querySelector('.seachInput').value;
+        
+    //     if(seachInput.trim() === ''){
+    //         alert('빈칸 넣으세요');
+    //         return;
+    //     }
+    //     const seachData = allData.filter((e) => e.title.includes(seachInput));
+
+    //     allSeachData = seachData;
+
+    //     // 검색 결과를 세션 저장소에 저장
+    //     sessionStorage.setItem('searchData', JSON.stringify(seachData));
+
+    //     rendPost(seachData);
+    // };
+
+
+    document.getElementById('form').onsubmit = (e)=>{
+        e.preventDefault();
+    }
+
+    // 요일
+    const dayKr = ['일','월','화','수','목','금','토'];
+
+    // 현재페이지
+    let curruntPage = 1;
+
+    // 보여질 페이지 계산
+    const postperPage = 10;
+
+
+    // 페이지 그룹화
+    let curruntView = 1;
+    const curruntGroup = 5;
+
+
+    // 파라미터 가져오기
+    const ParamPage = new URLSearchParams(window.location.search);
+
+
+    // 현재 Url 가져오기
+    const url = new URL(window.location.href);
+    
+
+    const renderPageNumber = (changePage) =>{
+        console.log(changePage);
+        // curruntView = Math.ceil(changePage / curruntGroup);
+        
+        url.searchParams.set('page', changePage);
+        location.href = url;
+
+    }
+
+
+    // Paing 
+    const paingRender = (dataLength) =>{
+        
+        const id = document.getElementById('paging');
+        id.innerHTML = '';
+
+        const curruntPage =  ParamPage.get('page') ? +ParamPage.get('page') : 1;
+        
+        curruntView = Math.ceil(curruntPage / curruntGroup);
+
+        //총 페이징 계산하기 
+        const pageTotalCount = Math.ceil( dataLength  / postperPage);        
+        const pageArr = Array.from({length : pageTotalCount} , ( _ , idx)=> idx + 1 );
+
+
+        const startPage = (curruntView - 1) * curruntGroup;
+        const endPage = startPage + curruntGroup;
+
+
+        console.log('startPage :', startPage);
+        console.log('endPage :', endPage);
+        console.log('TotalPage :' , pageTotalCount);
+        
+
+        // prev
+        if(curruntView > 1){
+            const btn = document.createElement('button');
+            btn.textContent = 'prev';
+            
+            btn.onclick = () =>{
+                renderPageNumber(startPage)
+            }
+            id.appendChild(btn);
+        }
+
+
+        // 페이지 뿌리기
+        pageArr.slice(startPage , endPage).forEach((page)=>{
+            const btn = document.createElement('button');
+            
+            btn.setAttribute('onClick',`pageChange(${page})`)
+            const pageNum = +ParamPage.get('page');
+            const test = page === pageNum && 'active';
+            
+            btn.classList.add(test);
+            
+
+            btn.textContent = page;
+            id.appendChild(btn);
+        });
+
+
+
+        // next
+        if(endPage < pageTotalCount){
+
+            const btn = document.createElement('button');
+            btn.textContent = 'NEXT';
+
+            btn.onclick = () =>{
+                renderPageNumber(endPage + 1)
+            }
+            id.appendChild(btn);
+        }
+        
+    } 
+
+
+    // 검색
+    const seach = () =>{
+        const seachInput = document.querySelector('.seachInput').value;
+
+        url.search = ''; // Url 파라미터 초기화
+        if(!seachInput){
+            url.search = ''
+        }else{
+            url.searchParams.set('keyword',seachInput);
+        }
+        
+        location.href = url;
+    }
+
+
+    // 랜딩 데이터
+    const rendPost = (data) =>{
+    
+        const page = ParamPage.get('page') ? +ParamPage.get('page') : curruntPage;
+        
+
+        const seachKeyword = ParamPage.get('keyword');
+        
+        const seachData = data.filter((e)=>{
+            return e.title.includes(seachKeyword);
+        });
+
+        let renderData = !seachData || seachData.length === 0 ? data : seachData;
+        
+        const id = document.getElementById('notice');
+
+        let startData = (page - 1) * postperPage;
+        let endData = page * postperPage;
+
+        
+        let html = '<table>';
+            
+        if(!renderData.length || renderData.length === 0 ){
+            html += '검색 데이터가 없습니다';
+        }
+        else{
+            renderData.slice(startData, endData).forEach((e)=>{
+
+                const year = new Date(e.updatedAt).getFullYear();
+                const month = new Date(e.updatedAt).getMonth() + 1;
+                const day = new Date(e.updatedAt).getDate();
+                const days = new Date(e.updatedAt).getDay();
+
+                html += `<tr>`;
+                html += `<td class='idx'>${e.id}</td>`;
+                html += `<td><a href='/javasciprt/paging/notice.html?id=${e.id}'>${e.title}</a></td>`;
+                html += `<td class='date'>${year}. ${month}. ${day} ${dayKr[days]}요일</td>`;
+                html += `<tr>`;
+            });
+        }
+
+        html += '</table>';
+        id.innerHTML = html;
+
+        // 페이징
+        paingRender(renderData.length);
+    }
+
+    // PageChange
+    const pageChange = (changePage) => {
+        url.searchParams.set('page', changePage);
+        location.href = url;
+    };
+
+
+    // 초기데이터
+    const connectApi = () =>{
+            fetch('https://koreanjson.com/posts/')
+            .then(res => {
+                if(!res.ok){
+                    throw new Error('뭔가 잘못됨')
+                }
+                return res.json();
+            })
+            .then(data =>
+                {
+                    // 페이지 전체데이터
+                    rendPost(data);
+                }
+            )
+            .catch(error=>{
+                console.error(error);
+            })
+    }
+    connectApi();
+    
+</script>
+</html>
