@@ -44,27 +44,27 @@
 
 </body>
 <script>
+
+// 탭
 const tabs = document.querySelectorAll('.tab span');
 
-tabs.forEach((tab) => {
-    tab.addEventListener('click', () => {
-        const submenu = tab.nextElementSibling; // span의 다음 형제 요소인 submenu를 선택
+tabs.forEach((tab)=>{
+    tab.addEventListener('click', ()=>{
+        const submenu = tab.nextElementSibling; //Element만 가져옴
 
-        if (tab.classList.contains('active')) {
+        if(tab.classList.contains('active')){
             tab.classList.remove('active');
-            submenu.style.height = 0; // 높이 초기화
-        } else {
-            // 모든 탭을 비활성화하고 모든 서브메뉴를 닫음
-            tabs.forEach((t) => {
-                t.classList.remove('active');
-                t.nextElementSibling.style.height = 0;
+            submenu.style.height = 0;
+        }else{
+            tabs.forEach((e)=>{
+                e.classList.remove('active');
+                e.nextElementSibling.style.height = 0;
             });
             tab.classList.add('active');
-            // 선택된 탭과 서브메뉴를 활성화
-            const height = submenu.scrollHeight + "px";
-            submenu.style.height = height;
+            submenu.style.height = submenu.scrollHeight + 'px';
         }
     });
 });
+
 </script>
 </html>
