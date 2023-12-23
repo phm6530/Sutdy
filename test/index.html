@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        ul, li {
+            margin: 0;
+        }
+        .tab .submenu{
+            height: 0px;
+            transition: all .5s ease;
+            overflow: hidden;
+        }
+        .tab.active .submenu{
+            display: block;
+        }
+
+        .tab.active span{
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <input type="text" class="name">
+    <button disabled>button</button>
+
+    <script>
+        const inputName = document.querySelector('.name');
+        const btn = document.querySelector('button');
+
+        let deBounce;
+        
+        inputName.addEventListener('input' , (e)=>{
+            if(deBounce){
+                clearTimeout(deBounce);
+            }
+            deBounce = setTimeout(()=>{
+                if(e.target.value.length > 5){
+                     btn.disabled = false;
+                     console.log('완료!');
+                }
+            },1000);
+        });
+
+
+    </script>
+
+    <nav>
+        <div class="tab">
+            <span>TAB</span>
+            <div class="submenu">
+                <ul>
+                    <li>subMenu</li>
+                    <li>subMenu</li>
+                    <li>subMenu</li>
+                    <li>subMenu</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="tab">
+            <span>TAB</span>
+            <div class="submenu">
+                <ul>
+                    <li>subMenu</li>
+                    <li>subMenu</li>
+                    <li>subMenu</li>
+                    <li>subMenu</li>
+                    <li>subMenu</li>
+                    <li>subMenu</li>
+                    <li>subMenu</li>
+                    <li>subMenu</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="tab">
+            <span>TAB</span>
+            <div class="submenu">
+                <ul>
+                    <li>subMenu</li>
+                    <li>subMenu</li>
+                    <li>subMenu</li>
+                    <li>subMenu</li>
+                </ul>
+            </div>
+        </div>
+
+    </nav>
+</body>
+<script>
+    
+
+
+    const addClickEvent = (div) =>{
+        div.forEach((tab)=>{
+            tab.addEventListener('click',()=>{
+                const submenu = tab.querySelector('.submenu');
+
+                if(tab.classList.contains('active')){
+                    tab.classList.remove('active');
+                    submenu.style.height = 0;
+                }else {
+                    div.forEach((e) => {
+                        e.classList.remove('active');
+                        e.querySelector('.submenu').style.height = 0;
+                    });
+                    tab.classList.add('active');
+                    const height = submenu.scrollHeight + "px";
+                    submenu.style.height = height;
+                }
+            });
+        });
+    }
+
+    const addEventListener = (target , callback) =>{
+        const tabTaget = document.querySelectorAll(target);
+        callback(tabTaget);
+    }
+
+    addEventListener('.tab' ,addClickEvent)
+
+
+</script>
+</html>

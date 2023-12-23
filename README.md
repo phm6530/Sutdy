@@ -5,6 +5,8 @@ JS / react Study ...
 # 프로젝트 생성 명령어 
 yarn create react-app 
 
+yarn add react react-dom react-scripts react-router-dom 
+
 
 
 # 테일윈드 초기 설치
